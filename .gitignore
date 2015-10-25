@@ -99,3 +99,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+#Custom
+recyclebin/
+Settings.cfg
+gui.dat
+setup.py
