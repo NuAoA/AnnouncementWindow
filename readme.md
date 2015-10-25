@@ -16,7 +16,7 @@ The first time you start Announcement Window+, you need to connect the program t
 
 ### **Custom Filters**
 
-If you want to take a look at how the announcements are filtered, right click the window and click ```Toggle Tags```. These filters are loaded from the file found at ```Edit Filters.cfg```. It uses regular expressions to group announcements into categories for easy filtering (see: https://docs.python.org/2/library/re.html). Anything that you find in your *gamelog.txt* file will be checked against these expressions. The expressions are checked in the order they appear in the file, so the first match it finds will determine what group/category the announcement falls under.
+If you want to take a look at how the announcements are filtered, right click the window and click ```Toggle Tags```. These filters are loaded from the file found at ```Open Filters.cfg```. It uses regular expressions to group announcements into categories for easy filtering (see: https://docs.python.org/2/library/re.html). Anything that you find in your *gamelog.txt* file will be checked against these expressions. The expressions are checked in the order they appear in the file, so the first match it finds will determine what group/category the announcement falls under.
 Each tag follows the format:
 
 	[group][category] "regular_expression"
