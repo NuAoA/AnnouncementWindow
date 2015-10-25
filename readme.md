@@ -1,4 +1,4 @@
-#Announcement Window+
+# Announcement Window+
 
 Announcement Window+ is a python application that interfaces with Dwarf Fortress to print announcements and combat reports to a separate window.
 
