@@ -6,13 +6,15 @@ You can edit the type of announcements that are shown in the two separate displa
 
 You can also configure the font/size/color of the announcements, and with a basic understanding of [regular expressions](https://docs.python.org/2/library/re.html) you can even create your own custom filters!
 
-This program was written for python 2.7.8 and will not work with python 3. 
+This program was written for python 2.7.10 and will not work with python 3. 
 
 ## Configuration
 
 ### **Install**
 
-If you are running windows, download the latest release (https://github.com/NuAoA/AnnouncementWindow/releases) and unzip the folder anywhere on your computer. 
+If you are running windows, download the latest release (https://github.com/NuAoA/AnnouncementWindow/releases) and unzip the folder anywhere on your computer. Click *AnnouncementWindow.exe* to launch.
+
+If you are not on windows, or just want to run the code directly, you will need to have python 2 installed on your computer. The program is launched by running the script *run.py*.
 
 ### **Setup**
 
@@ -20,7 +22,7 @@ The first time you start Announcement Window+, you need to connect the program t
 
 ### **Custom Filters**
 
-If you want to take a look at how the announcements are filtered, right click the window and click ```Toggle Tags```. These filters are loaded from the file found at ```Open Filters.cfg```. It uses regular expressions to group announcements into categories for easy filtering (see: https://docs.python.org/2/library/re.html). Anything that you find in your *gamelog.txt* file will be checked against these expressions. The expressions are checked in the order they appear in the file, so the first match it finds will determine what group/category the announcement falls under.
+If you want to take a look at how the announcements are filtered, right click the window and click ```Toggle Tags```. These filters are loaded from the file found at ```Open Filters.txt```. It uses regular expressions to group announcements into categories for easy filtering (see: https://docs.python.org/2/library/re.html). Anything that you find in your *gamelog.txt* file will be checked against these expressions. The expressions are checked in the order they appear in the file, so the first match it finds will determine what group/category the announcement falls under.
 Each tag follows the format:
 
 	[group][category] "regular_expression"
@@ -30,7 +32,7 @@ Where ```[group]``` is a tag to set a separate color for each matched announceme
 
 #### Here's a typical example:
 
-Say you don't like how the announcements for Thief's showing up share the same color with as Snatchers. Just edit *Filters.cfg* and change the group for that regular expression from ```[intruders]``` to something new.
+Say you don't like how the announcements for Thief's showing up share the same color with as Snatchers. Just edit *Filters.txt* and change the group for that regular expression from ```[intruders]``` to something new.
 specifically, you could change the line
 
 	[intruders][intruders] "Thief!  Protect the hoard from skulking filth!"

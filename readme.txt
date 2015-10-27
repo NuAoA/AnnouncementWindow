@@ -15,6 +15,11 @@ of regular expressions (https://docs.python.org/2/library/re.html) you can even 
 custom filters!
 
 Configuration:
+**Install**
+
+If you are running windows, download the latest release (https://github.com/NuAoA/AnnouncementWindow/releases) and unzip the folder anywhere on your computer. Click *AnnouncementWindow.exe* to launch.
+
+If you are not on windows, or just want to run the code directly, you will need to have python 2 installed on your computer. The program is launched by running the script *run.py*.
 
 **Setup**
 
@@ -27,7 +32,7 @@ you do that the file will be created. Alternatively, you can manually edit the v
 **Custom Filters**
 
 If you want to take a look at how the announcements are filtered, right click the window and
-click ```Toggle Tags```. These filters are loaded from the file found at ```Edit Filters.cfg```.
+click ```Toggle Tags```. These filters are loaded from the file found at ```Edit Filters.txt```.
 It uses regular expressions to group announcements into categories for easy filtering (see:
 https://docs.python.org/2/library/re.html). Anything that you find in your *gamelog.txt* file
 will be checked against these expressions. The expressions are checked in the order they appear
@@ -45,7 +50,7 @@ window, and is used to set if the announcement should be shown in the window or 
 Here's a typical example:
 
 Say you don't like how the announcements for Thief's showing up share the same color with as
-Snatchers. Just edit *Filters.cfg* and change the group for that regular expression from
+Snatchers. Just edit *Filters.txt* and change the group for that regular expression from
 ```[intruders]``` to something new.
 specifically, you could change the line
 
