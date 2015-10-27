@@ -155,5 +155,3 @@ def askChooseFont( parent, defaultfont=None, showstyles=FontChooser.ALL ):
 if __name__ == '__main__':
     root = Tix.Tk( )
     font = askChooseFont( root )    
-    if font:
-        print font

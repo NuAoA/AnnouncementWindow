@@ -46,5 +46,5 @@ class announcement(object):
         return Filters.expressions.get_color(self.get_group())
   
     def print_text(self):
-        print '%s'%(self.get_text(show_group=True).strip())
-        print '  Color:%s, Show:%s'%(self.get_color(),self.get_show(-1))
+        print('%s'%(self.get_text(show_group=True).strip()))
+        print('  Color:%s, Show:%s'%(self.get_color(),self.get_show(-1)))

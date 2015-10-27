@@ -165,13 +165,13 @@ class announcement_filter(object):
                        
     def print_filters(self):
         for group in self.groups.items():
-            print '[%s]'%group[1].group
+            print('[%s]'%group[1].group)
             for cat in group[1].categories.items():
-                print ' [%s]'%cat[1].category
-                print '  show: %s'%cat[1].show
-                print '   patterns:'
+                print(' [%s]'%cat[1].category)
+                print('  show: %s'%cat[1].show)
+                print('   patterns:')
                 for exp in cat[1].re_expressions:
-                    print '    %s'%exp.pattern
+                    print('    %s'%exp.pattern)
     def set_color(self,group,color):
         g = self.lookup_group(group)
         if g:

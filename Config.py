@@ -1,4 +1,4 @@
-import ConfigParser
+import ConfigParser 
 import pickle
 import os
 
@@ -6,7 +6,7 @@ class config(object):
     def __init__(self):
         self.parser = ConfigParser.ConfigParser()        
         self.filepath =            "Settings.cfg"
-        self.filters_path =        "filters.cfg"       
+        self.filters_path =        "filters.txt"       
         self.gui_data =            "gui.dat"
         self.filters_pickle_path = "filters.dat"
         self.section ="Settings"
@@ -29,7 +29,7 @@ class config(object):
         self.load_previous_announcements = False
         self.save_hidden_announcements = False
         self.trim_announcements = [0,0]
-        
+
     def load(self):
         if not os.path.exists(self.filepath):
             self.parser.add_section(self.section)

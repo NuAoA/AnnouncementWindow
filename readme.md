@@ -6,9 +6,13 @@ You can edit the type of announcements that are shown in the two separate displa
 
 You can also configure the font/size/color of the announcements, and with a basic understanding of [regular expressions](https://docs.python.org/2/library/re.html) you can even create your own custom filters!
 
-
+This program was written for python 2.7.8 and will not work with python 3. 
 
 ## Configuration
+
+### **Install**
+
+If you are running windows, download the latest release (https://github.com/NuAoA/AnnouncementWindow/releases) and unzip the folder anywhere on your computer. 
 
 ### **Setup**
 

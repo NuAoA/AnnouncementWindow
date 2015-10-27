@@ -1,9 +1,15 @@
+import sys
+if sys.version_info.major != 2:
+    raise UserWarning("This program requires python 2")
 import Tkinter
 import Tix
-import tkFileDialog,tkColorChooser,tkFontChooser,tkFont
+import tkFileDialog
+import tkColorChooser
+import tkFont
+import tkFontChooser
 import Config 
 import GamelogReader, Filters 
-import subprocess, os, sys
+import subprocess, os
 from functools import partial
 from collections import OrderedDict
 
@@ -134,7 +140,7 @@ class announcement_window(Tkinter.Frame):
         
     def init_pulldown(self):
         self.pulldown = Tkinter.Menu(self, tearoff=0)        
-        self.pulldown.add_command(label="Colors/Visibility (%d)"%self.id, command=self.edit_colors)
+        self.pulldown.add_command(label="Edit Visibility(%d)"%self.id, command=self.edit_colors)
         self.pulldown.add_command(label="Change Font", command=self.edit_font)        
         self.pulldown.add_command(label="Toggle Tags", command=self.toggle_tags)        
         self.pulldown.add("separator")
@@ -245,18 +251,18 @@ class main_gui(Tix.Tk):
         self.menu = Tkinter.Menu(self,tearoff=0)
         self.menu.add_command(label="Set Directory",command = self.askpath)
         self.menu.add_separator()
-        self.menu.add_command(label="Open Filters.cfg",command = self.edit_filters) 
+        self.menu.add_command(label="Open Filters.txt",command = self.edit_filters) 
         #self.menu.add_command(label="Dump CPU info",command = self.dump_info)     
         self.config(menu=self.menu)
    
     def dump_info(self):
-        print 'CPU-MAX:%f'%max(self.cpu_max["CPU"])
-        print 'CPU-AVG:%f'%(sum(self.cpu_max["CPU"])/len(self.cpu_max["CPU"]))
+        print('CPU-MAX:%f'%max(self.cpu_max["CPU"]))
+        print('CPU-AVG:%f'%(sum(self.cpu_max["CPU"])/len(self.cpu_max["CPU"])))
         
-        print 'MEM-MAX:%f MB'%max(self.cpu_max["MEM"])
-        print 'MEM-AVG:%f MB'%(sum(self.cpu_max["MEM"])/len(self.cpu_max["MEM"]))
+        print('MEM-MAX:%f MB'%max(self.cpu_max["MEM"]))
+        print('MEM-AVG:%f MB'%(sum(self.cpu_max["MEM"])/len(self.cpu_max["MEM"])))
         self.cpu_max["CPU"] = []
-        self.cpu_max["MEM"] = []  
+        self.cpu_max["MEM"] = [] 
         
     def init_windows(self):
         self.panel = Tkinter.PanedWindow(self,orient="vertical",sashwidth=5)        
@@ -283,12 +289,15 @@ class main_gui(Tix.Tk):
         
     def edit_filters(self):
         filepath = Filters.expressions.filters_path
-        if sys.platform.startswith('darwin'):
-            subprocess.call(('open', filepath))
-        elif os.name == 'nt':
-            os.startfile(filepath)
-        elif os.name == 'posix':
-            subprocess.call(('xdg-open', filepath))
+        try:
+            if sys.platform.startswith('darwin'):
+                subprocess.call(('open', filepath))
+            elif os.name == 'nt':
+                os.startfile(filepath)
+            elif os.name == 'posix':
+                subprocess.call(('xdg-open', filepath))
+        except:
+            pass
                   
     def askpath(self):        
         path = Config.settings.get_gamelog_path()
