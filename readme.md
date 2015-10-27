@@ -14,7 +14,7 @@ This program was written for python 2.7.10 and will not work with python 3.
 
 If you are running windows, download the latest release (https://github.com/NuAoA/AnnouncementWindow/releases) and unzip the folder anywhere on your computer. Click *AnnouncementWindow.exe* to launch.
 
-If you are not on windows, or just want to run the code directly, you will need to have python 2 installed on your computer. The program is launched by running the script *run.py*.
+If you are not on windows, or just want to run the code directly, you will need to have python 2 installed on your computer. Download the repository. The program is launched by running the script *run.py*.
 
 ### **Setup**
 
