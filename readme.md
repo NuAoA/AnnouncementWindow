@@ -4,9 +4,9 @@ Announcement Window+ is a python application that interfaces with Dwarf Fortress
 
 You can edit the type of announcements that are shown in the two separate displays. For example, the first window could be set up to show announcements (```a```) and the other could show a live feed of your combat reports (```r```). No more pausing the game! 
 
-You can also configure the font/size/color of the announcements, and with a basic understanding of [regular expressions](https://docs.python.org/2/library/re.html) you can even create your own custom filters!
+You can also configure the font/size/color of the announcements (by right clicking on either display), and with a basic understanding of [regular expressions](https://docs.python.org/2/library/re.html) you can even create your own custom filters!
 
-This program was written for python 2.7.10 and will not work with python 3. 
+This program was written for python 2.7.10, but now has python 3 support! It should work with any version of python > 2.3 
 
 ## Configuration
 

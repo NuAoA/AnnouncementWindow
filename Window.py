@@ -1,10 +1,17 @@
 import sys
-if sys.version_info.major != 2:
-    raise UserWarning("This program requires python 2")
-import Tkinter
-import tkFileDialog
-import tkColorChooser
-import tkFont
+if sys.version_info.major == 2:
+    import Tkinter
+    import tkFileDialog
+    import tkColorChooser
+    import tkFont
+elif  sys.version_info.major == 3:
+    import tkinter as Tkinter
+    import tkinter.filedialog as tkFileDialog
+    import tkinter.colorchooser as tkColorChooser
+    import tkinter.font as tkFont  
+else:
+    raise UserWarning("unknown python version?!")
+
 import tkFontChooser
 import Config
 import GamelogReader, Filters
@@ -36,7 +43,7 @@ class config_gui(Tkinter.Toplevel):
         self.parent = parent
         self.filter = filter_
         self.pack_propagate(False)
-        self.iconbitmap('favicon.ico')
+        self.iconbitmap(Config.settings.icon_path)
         self.title("Color Configuration (Window %d)"%self.parent.id)
         self.config(bg="White",height=400,width=380)
         self.resizable(0,1)
@@ -159,7 +166,7 @@ class announcement_window(Tkinter.Frame):
         #self.pulldown.add_command(label="test", command=self.test_todo_remove)
 
     def popup(self,event):
-        self.pulldown.post(event.x_root, event.y_root)
+        self.pulldown.tk_popup(event.x_root, event.y_root)
 
     def toggle_tags(self):
         self.show_tags = not self.show_tags
@@ -236,7 +243,7 @@ class announcement_window(Tkinter.Frame):
 class main_gui(Tkinter.Tk):
     def __init__(self):
         Tkinter.Tk.__init__(self)
-        self.iconbitmap('favicon.ico')
+        self.iconbitmap(Config.settings.icon_path)
         self.title("Announcement Window+")
         self.protocol('WM_DELETE_WINDOW',self.clean_exit)
         self.pack_propagate(False)
@@ -257,7 +264,6 @@ class main_gui(Tkinter.Tk):
         #self.parallel()
         self.get_announcements(old=Config.settings.load_previous_announcements)
 
-
     def init_menu(self):
         self.menu = Tkinter.Menu(self,tearoff=0)
         if platform_osx:
@@ -271,7 +277,7 @@ class main_gui(Tkinter.Tk):
         if platform_osx:
             self.menu.add_cascade(label="Options", menu=main_menu)
         self.config(menu=self.menu)
-
+        
     def dump_info(self):
         print('CPU-MAX:%f'%max(self.cpu_max["CPU"]))
         print('CPU-AVG:%f'%(sum(self.cpu_max["CPU"])/len(self.cpu_max["CPU"])))

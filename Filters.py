@@ -2,10 +2,12 @@ from collections import OrderedDict
 import re,os
 import pickle
 import Config
+import sys
+import json
 
 class subgroup(object):
     def __init__(self,category,re_expression,w,show):
-        self.category = category
+        self.category = category    
         self.re_expressions = [re.compile(re_expression)]
         self.show = OrderedDict([])
         self.show[w] = show
@@ -44,7 +46,11 @@ class subgroup(object):
             if e:
                 return e
         return None 
- 
+    
+    def _dict(self):
+        ret_dict = {'category':self.category, 'show':self.show}
+        return ret_dict
+    
 class groups(object):
     def __init__(self,group):
         self.group = group
@@ -85,6 +91,12 @@ class groups(object):
                 return category[1]
         return None
 
+    def _dict(self):
+        ret_dict = {'group':self.group,'color':self.color,'categories':OrderedDict([])}
+        for cat_ in self.categories.items():
+            ret_dict['categories'][cat_[0]] = cat_[1]._dict()        
+        return ret_dict
+        
 class announcement_filter(object):
     def __init__(self):
         self.groups = OrderedDict([])
@@ -104,9 +116,9 @@ class announcement_filter(object):
     def load_filter_expressions(self):
         self.groups.clear()
         if os.path.isfile(self.filters_path):
-            with open(self.filters_path,"r") as fi:
+            with open(self.filters_path,'r') as fi:
                 for line in fi:
-                    if not re.match("\#.+",line) and not re.match("\s*$",line) and not line == "":
+                    if not re.match('\#.+',line) and not re.match('\s*$',line) and len(line.strip()) != 0:
                         mat = re.match(self.filter_format,line)
                         if mat:
                             group = mat.group("group")
@@ -124,31 +136,30 @@ class announcement_filter(object):
         self.groups[group].set_color("#FF0")
         self.lookup_group(group).add_category(category,expression)
         if self.window_count > 0:
-            for window in range(0,self.window_count+1):
+            for window in range(0,self.window_count):
                 for group in self.groups.items():
                     for cat in group[1].categories.items():
                         cat[1].add_window(window)
-                                 
+                        
     def load_filter_data(self):
-        if os.path.isfile(self.pickle_path):
-            groups_temp = OrderedDict([])        
-            with open(self.pickle_path,"r") as fi:
-                groups_temp = pickle.load(fi)
-            for window in range(0,self.window_count):
-                for group in groups_temp.items():
-                    g = self.lookup_group(group[1].group)
-                    if g:
-                        for cat in group[1].categories.items():
-                            c = g.lookup_category(cat[1].category)
-                            if c:
-                                g.set_show(cat[1].category,window,cat[1].get_show(window))
-                                g.set_color(group[1].color)                        
+        if os.path.isfile(self.pickle_path):          
+            with open(self.pickle_path,'r') as fi:
+                groups_temp = json.load(fi,parse_int=True)
+                for window in range(0,self.window_count):
+                    for group in groups_temp.items():
+                        g = self.lookup_group(group[0])
+                        if g:                        
+                            for cat in group[1]['categories'].items():
+                                c = g.lookup_category(cat[0])
+                                if c:                                
+                                    g.set_show(cat[0],window,cat[1]["show"][str(window)])
+                                    g.set_color(group[1]['color'])                                 
+                    
         
-                                
     def save_filter_data(self):
-        with open(self.pickle_path,"w") as fi:
-            pickle.dump(self.groups,fi)
-      
+        with open(self.pickle_path,'w') as fi:
+            json.dump(self._dict(),fi,indent=4)   
+    
     def find_expression(self,string):
         for group in self.groups.items():
             cat = group[1].find_expression(string)
@@ -161,7 +172,6 @@ class announcement_filter(object):
         for group in self.groups.items():
             for cat in group[1].categories.items():
                 cat[1].add_window(window)
-
                        
     def print_filters(self):
         for group in self.groups.items():
@@ -199,5 +209,11 @@ class announcement_filter(object):
             return g.get_show(w,category)
         else:
             return False
-
+        
+    def _dict(self):
+        #My own seralization method for the group dict
+        ret_dict = OrderedDict([])
+        for group_ in self.groups.items():
+            ret_dict[group_[0]] = group_[1]._dict()
+        return ret_dict
 expressions = announcement_filter()

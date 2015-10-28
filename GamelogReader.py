@@ -4,13 +4,12 @@ from Announcements import announcement
 import re
 
 class gamelog(object):
-    def __init__(self):
+    def __init__(self):        
         self.file = None
-
         
     def connect(self):
         if os.path.isfile(Config.settings.get_gamelog_path()):            
-            self.file = io.open(Config.settings.get_gamelog_path(),'rb')
+            self.file = io.open(Config.settings.get_gamelog_path(),'r',encoding='cp437')
             self.file.seek(0,2) #Move to the end of the file
             return True
         else:
@@ -22,9 +21,9 @@ class gamelog(object):
             list_ = self.file
         new = []
         if self.file:
-            for newline in list_:                
+            for newline in list_:            
                 s = newline.strip()
-                if s != "":                                
+                if len(s) != 0:                                
                     new.append(announcement(s))
         return new
 
@@ -32,14 +31,12 @@ class gamelog(object):
         lines = []
         if self.file:
             self.file.seek(0,0)
-            exp = re.compile("\*\* Loading Fortress \*\*")
+            exp = re.compile('\*\* Loading Fortress \*\*')
             for line in self.file:
                 if exp.match(line):
                     lines = []
                 lines.append(line)
-        return self.get_new_announcements(list_=lines)
-
-            
+        return self.get_new_announcements(list_=lines)            
                       
     def new(self):
         return self.get_new_announcements()
