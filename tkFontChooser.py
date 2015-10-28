@@ -30,7 +30,7 @@ class myFontChooser(tkSimpleDialog.Dialog):
         self.familyList = list(tkFont.families())
         self.familyList.sort()
         self.sizeList=[]
-        print self.familyList
+        
         for i in range(6,30):
             self.sizeList.append(i)
         self.fontBox = ttk.Combobox(master, values=self.familyList)
@@ -55,13 +55,13 @@ class myFontChooser(tkSimpleDialog.Dialog):
         Tkinter.Checkbutton( master,command=self.modifyStyle, text="italic",  offvalue='roman', onvalue='italic', variable=self._slant ).grid(row=theRow, column=1)
         Tkinter.Checkbutton( master,command=self.modifyStyle, text="underline",  offvalue=False, onvalue=True, variable=self._isUnderline ).grid(row=theRow, column=2)
         theRow += 1        
-        Tkinter.Label( master, text='Sample Text', anchor=Tkinter.W ).grid( row=theRow, column=0, pady=10, sticky=Tkinter.W )        
+        Tkinter.Label( master, text='Sample Text', anchor=Tkinter.W).grid( row=theRow, column=0, pady=10, sticky=Tkinter.W )        
         theRow += 1        
-        self.sampleText = Tkinter.Text( master, height=11, width=50 )
+        self.sampleText = Tkinter.Text( master, height=11, width=50,background="black" )
         self.sampleText.insert( Tkinter.INSERT,
                                 'ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\nA vile force of darkness has arrived!', 'fontStyle' )
         self.sampleText.config( state=Tkinter.DISABLED )
-        self.sampleText.tag_config( 'fontStyle', font=self.defaultFont )
+        self.sampleText.tag_config( 'fontStyle', font=self.defaultFont,foreground="red" )
         self.sampleText.grid(row=theRow, column=0, columnspan=4, padx=10)
 
     def modifyFont(self,event):
