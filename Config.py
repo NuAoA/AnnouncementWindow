@@ -7,6 +7,11 @@ elif sys.version_info.major == 3:
 import pickle
 import os
 
+platform_win = (sys.platform == 'win32')
+platform_osx = (sys.platform == 'darwin')
+platform_linux = (sys.platform == 'linux2')
+platform_unix = (platform_osx or platform_linux)
+
 class config(object):
     def __init__(self):
         self.parser = ConfigParser.ConfigParser()        
@@ -14,7 +19,7 @@ class config(object):
         self.filters_path =        "filters.txt"    
         self.gui_data =            "Data/gui.dat"        
         self.filters_pickle_path = "Data/filters.dat"
-        self.icon_path = "Data/favicon.ico"  
+        self.icon_path = "Data/favicon.XBM" if platform_linux else "Data/favicon.ico"   
         self.section ="Settings"
         self.init_var()
         self.load() 

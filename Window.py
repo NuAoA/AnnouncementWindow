@@ -21,9 +21,6 @@ from collections import OrderedDict
 
 #import psutil,time
 
-READ = 'r' if not (sys.version_info.major == 3) else 'r'
-WRITE = 'w' if not (sys.version_info.major == 3) else 'w'
-
 platform_win = (sys.platform == 'win32')
 platform_osx = (sys.platform == 'darwin')
 platform_linux = (sys.platform == 'linux2')
@@ -169,7 +166,7 @@ class announcement_window(Tkinter.Frame):
         #self.pulldown.add_command(label="test", command=self.test_todo_remove)
 
     def popup(self,event):
-        self.pulldown.post(event.x_root, event.y_root)
+        self.pulldown.tk_popup(event.x_root, event.y_root)
 
     def toggle_tags(self):
         self.show_tags = not self.show_tags
