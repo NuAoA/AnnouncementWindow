@@ -46,7 +46,7 @@ class config_gui(Tkinter.Toplevel):
         self.parent = parent
         self.filter = filter_
         self.pack_propagate(False)
-        self.iconbitmap('favicon.ico')
+        self.iconbitmap(Config.settings.icon_path)
         self.title("Color Configuration (Window %d)"%self.parent.id)
         self.config(bg="White",height=400,width=380)
         self.resizable(0,1)
@@ -246,7 +246,7 @@ class announcement_window(Tkinter.Frame):
 class main_gui(Tkinter.Tk):
     def __init__(self):
         Tkinter.Tk.__init__(self)
-        self.iconbitmap('favicon.ico')
+        self.iconbitmap(Config.settings.icon_path)
         self.title("Announcement Window+")
         self.protocol('WM_DELETE_WINDOW',self.clean_exit)
         self.pack_propagate(False)
