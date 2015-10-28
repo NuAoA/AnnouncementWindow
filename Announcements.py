@@ -3,14 +3,17 @@ import Config
 
 class announcement(object):
     def __init__(self,string):
-        group,category = Filters.expressions.find_expression(string)  
-        self.text = string
-        self.group_name = group.group
-        self.category_name = category.category
-
+        group,category = Filters.expressions.find_expression(string)
+        if type(string) is bytes:
+            self.text = string.decode('cp437')
+        else:
+            self.text = string
         if group == None or category == None:
-            raise UserWarning("Nonetype object lookup, group:%s category:%s text:%s"%(self.group_name,self.category_name,string)) #TODO: remove 
-          
+            print(string)
+            raise UserWarning("Nonetype object lookup, string:%s"%(string)) #TODO: remove 
+        self.group_name = group.group
+        self.category_name = category.category  
+        
     def get_text(self,show_group = False,newline = True):
         if show_group:
             return "[%s][%s] %s"%(self.get_group(),self.get_category(),self.get_text())

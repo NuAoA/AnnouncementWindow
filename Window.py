@@ -1,10 +1,17 @@
 import sys
-if sys.version_info.major != 2:
-    raise UserWarning("This program requires python 2")
-import Tkinter
-import tkFileDialog
-import tkColorChooser
-import tkFont
+if sys.version_info.major == 2:
+    import Tkinter
+    import tkFileDialog
+    import tkColorChooser
+    import tkFont
+elif  sys.version_info.major == 3:
+    import tkinter as Tkinter
+    import tkinter.filedialog as tkFileDialog
+    import tkinter.colorchooser as tkColorChooser
+    import tkinter.font as tkFont  
+else:
+    raise UserWarning("unknown python version?!")
+
 import tkFontChooser
 import Config
 import GamelogReader, Filters
@@ -13,6 +20,9 @@ from functools import partial
 from collections import OrderedDict
 
 #import psutil,time
+
+READ = 'r' if not (sys.version_info.major == 3) else 'rb'
+WRITE = 'w' if not (sys.version_info.major == 3) else 'wb'
 
 platform_win = (sys.platform == 'win32')
 platform_osx = (sys.platform == 'darwin')

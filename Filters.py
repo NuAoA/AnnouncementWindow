@@ -2,10 +2,16 @@ from collections import OrderedDict
 import re,os
 import pickle
 import Config
+import sys
+    
+READ = 'r' if not (sys.version_info.major == 3) else 'rb'
+WRITE = 'w' if not (sys.version_info.major == 3) else 'wb'
 
 class subgroup(object):
     def __init__(self,category,re_expression,w,show):
         self.category = category
+        if type(re_expression) is str:
+            re_expression = str.encode(re_expression)      
         self.re_expressions = [re.compile(re_expression)]
         self.show = OrderedDict([])
         self.show[w] = show
@@ -30,7 +36,10 @@ class subgroup(object):
         self.show[w] = self.show[0]
             
     def add_expression(self,re_expression):
+        if type(re_expression) is str:
+            re_expression = str.encode(re_expression)
         self.re_expressions.append(re.compile(re_expression))
+        print('loaded expression: %s'%(re_expression))
         
     def check_expression(self,string):
         for expression in self.re_expressions:
@@ -90,7 +99,7 @@ class announcement_filter(object):
         self.groups = OrderedDict([])
         self.pickle_path = Config.settings.filters_pickle_path
         self.filters_path = Config.settings.filters_path        
-        self.filter_format = '\[(?P<group>\w+)\]\[(?P<category>\w+|\s*)\]\s*\"(?P<expression>.+)\"'
+        self.filter_format = b'\[(?P<group>\w+)\]\[(?P<category>\w+|\s*)\]\s*\"(?P<expression>.+)\"'
         self.window_count = 0 
         self.reload()            
         
@@ -104,9 +113,9 @@ class announcement_filter(object):
     def load_filter_expressions(self):
         self.groups.clear()
         if os.path.isfile(self.filters_path):
-            with open(self.filters_path,"r") as fi:
+            with open(self.filters_path,READ) as fi:
                 for line in fi:
-                    if not re.match("\#.+",line) and not re.match("\s*$",line) and not line == "":
+                    if not re.match(b'\#.+',line) and not re.match(b'\s*$',line) and len(line.strip()) != 0:
                         mat = re.match(self.filter_format,line)
                         if mat:
                             group = mat.group("group")
@@ -131,8 +140,8 @@ class announcement_filter(object):
                                  
     def load_filter_data(self):
         if os.path.isfile(self.pickle_path):
-            groups_temp = OrderedDict([])        
-            with open(self.pickle_path,"r") as fi:
+            groups_temp = OrderedDict([])            
+            with open(self.pickle_path,READ) as fi:
                 groups_temp = pickle.load(fi)
             for window in range(0,self.window_count):
                 for group in groups_temp.items():
@@ -145,8 +154,8 @@ class announcement_filter(object):
                                 g.set_color(group[1].color)                        
         
                                 
-    def save_filter_data(self):
-        with open(self.pickle_path,"w") as fi:
+    def save_filter_data(self):        
+        with open(self.pickle_path,WRITE) as fi:
             pickle.dump(self.groups,fi)
       
     def find_expression(self,string):

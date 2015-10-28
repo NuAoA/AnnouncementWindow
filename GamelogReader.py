@@ -22,9 +22,9 @@ class gamelog(object):
             list_ = self.file
         new = []
         if self.file:
-            for newline in list_:                
+            for newline in list_:            
                 s = newline.strip()
-                if s != "":                                
+                if len(s) != 0:                                
                     new.append(announcement(s))
         return new
 
@@ -32,7 +32,7 @@ class gamelog(object):
         lines = []
         if self.file:
             self.file.seek(0,0)
-            exp = re.compile("\*\* Loading Fortress \*\*")
+            exp = re.compile(b'\*\* Loading Fortress \*\*')
             for line in self.file:
                 if exp.match(line):
                     lines = []

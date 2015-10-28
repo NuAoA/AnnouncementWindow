@@ -1,26 +1,38 @@
-import ConfigParser 
+import sys
+if sys.version_info.major == 2:
+    import ConfigParser
+elif sys.version_info.major == 3:
+    import configparser as ConfigParser
+    
 import pickle
 import os
+
+READ = 'r' if not (sys.version_info.major == 3) else 'rb'
+WRITE = 'w' if not (sys.version_info.major == 3) else 'wb'
 
 class config(object):
     def __init__(self):
         self.parser = ConfigParser.ConfigParser()        
         self.filepath =            "Settings.cfg"
-        self.filters_path =        "filters.txt"       
-        self.gui_data =            "gui.dat"
-        self.filters_pickle_path = "filters.dat"
+        self.filters_path =        "filters.txt"
+        if sys.version_info.major == 2:       
+            self.gui_data =            "gui.dat"        
+            self.filters_pickle_path = "filters.dat"
+        elif sys.version_info.major == 3:
+            self.gui_data =            "gui.dat3"        
+            self.filters_pickle_path = "filters.dat3"      
         self.section ="Settings"
         self.init_var()
         self.load() 
         
     def load_gui_data(self):
         if os.path.isfile(self.gui_data):
-            with open(self.gui_data,"r") as fi:
+            with open(self.gui_data,READ) as fi:
                 return pickle.load(fi)
         return None
     
     def save_gui_data(self,data):
-        with open(self.gui_data,"w") as fi:
+        with open(self.gui_data,WRITE) as fi:
             pickle.dump(data,fi)
             
     def init_var(self):

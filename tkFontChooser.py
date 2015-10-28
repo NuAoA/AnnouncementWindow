@@ -1,6 +1,15 @@
-import tkSimpleDialog
-import tkFont
-import Tkinter,ttk
+import sys
+if sys.version_info.major == 2:
+    import tkSimpleDialog
+    import tkFont
+    import Tkinter
+    import ttk
+elif sys.version_info.major == 3:
+    import tkinter.simpledialog as tkSimpleDialog
+    import tkinter.font as tkFont
+    import tkinter as Tkinter
+    import tkinter.ttk as ttk  
+
 
 class myFontChooser(tkSimpleDialog.Dialog):
     def __init__(self,parent,defaultFont = None):       
