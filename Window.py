@@ -19,6 +19,13 @@ platform_win = (sys.platform == 'win32')
 platform_osx = (sys.platform == 'darwin')
 platform_linux = (sys.platform == 'linux2')
 platform_unix = (platform_osx or platform_linux)
+mouse_buttons = {
+    'left': 1,
+    'right': 3 if not platform_osx else 2,
+    'middle': 2 if not platform_osx else 3
+}
+for k in mouse_buttons:
+    mouse_buttons[k] = '<Button-%i>' % mouse_buttons[k]
 
 def dict_to_font(dict_):
     return tkFont.Font(family=dict_["family"],size=dict_["size"],weight=dict_["weight"],slant=dict_["slant"],overstrike=dict_["overstrike"],underline=dict_["underline"])
@@ -29,7 +36,7 @@ class config_gui(Tkinter.Toplevel):
         self.parent = parent
         self.filter = filter_
         self.pack_propagate(False)
-        self.iconbitmap(default='favicon.ico')
+        self.iconbitmap('favicon.ico')
         self.title("Color Configuration (Window %d)"%self.parent.id)
         self.config(bg="White",height=400,width=380)
         self.resizable(0,1)
@@ -124,7 +131,7 @@ class announcement_window(Tkinter.Frame):
         self.vsb.pack(side="right", fill="y")
         self.text.config(cursor="")
         self.text.pack(side="left", fill="both", expand=True)
-        self.text.bind("<Button-3>", self.popup)
+        self.text.bind(mouse_buttons["right"], self.popup)
 
 
         #link methods
