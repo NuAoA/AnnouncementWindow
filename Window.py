@@ -24,6 +24,7 @@ mouse_buttons = {
     'right': 3 if not platform_osx else 2,
     'middle': 2 if not platform_osx else 3
 }
+
 for k in mouse_buttons:
     mouse_buttons[k] = '<Button-%i>' % mouse_buttons[k]
 
