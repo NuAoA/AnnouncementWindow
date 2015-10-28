@@ -11,10 +11,12 @@ elif sys.version_info.major == 3:
     import tkinter.ttk as ttk
 
 
+_default_font = 'Arial'
+
 class myFontChooser(tkSimpleDialog.Dialog):
     def __init__(self, parent, defaultFont=None):
         if defaultFont is None:
-            self._family = Tkinter.StringVar(value='Arial')
+            self._family = Tkinter.StringVar(value=_default_font)
             self._size = Tkinter.StringVar(value='10')
             self._weight = Tkinter.StringVar(value=tkFont.NORMAL)
             self._slant = Tkinter.StringVar(value=tkFont.ROMAN)
@@ -46,7 +48,10 @@ class myFontChooser(tkSimpleDialog.Dialog):
         self.sizeBox = ttk.Combobox(master, values=self.sizeList)
 
 
-        self.fontBox.current(self.familyList.index(self._family.get()))
+        if self._family.get() in self.familyList:
+            self.fontBox.current(self.familyList.index(self._family.get()))
+        elif _default_font in self.familyList:
+            self.fontBox.current(self.familyList.index(_default_font))
         self.sizeBox.current(self.sizeList.index(int(self._size.get())))
 
 
