@@ -21,8 +21,8 @@ from collections import OrderedDict
 
 #import psutil,time
 
-READ = 'r' if not (sys.version_info.major == 3) else 'rb'
-WRITE = 'w' if not (sys.version_info.major == 3) else 'wb'
+READ = 'r' if not (sys.version_info.major == 3) else 'r'
+WRITE = 'w' if not (sys.version_info.major == 3) else 'w'
 
 platform_win = (sys.platform == 'win32')
 platform_osx = (sys.platform == 'darwin')
@@ -267,7 +267,6 @@ class main_gui(Tkinter.Tk):
         #self.parallel()
         self.get_announcements(old=Config.settings.load_previous_announcements)
 
-
     def init_menu(self):
         self.menu = Tkinter.Menu(self,tearoff=0)
         if platform_osx:
@@ -281,7 +280,7 @@ class main_gui(Tkinter.Tk):
         if platform_osx:
             self.menu.add_cascade(label="Options", menu=main_menu)
         self.config(menu=self.menu)
-
+        
     def dump_info(self):
         print('CPU-MAX:%f'%max(self.cpu_max["CPU"]))
         print('CPU-AVG:%f'%(sum(self.cpu_max["CPU"])/len(self.cpu_max["CPU"])))

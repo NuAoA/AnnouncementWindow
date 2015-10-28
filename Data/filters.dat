@@ -1,0 +1,577 @@
+{
+    "battle_minor": {
+        "color": "#c0c0c0", 
+        "group": "battle_minor", 
+        "categories": {
+            "hitevents_miss": {
+                "category": "hitevents_miss", 
+                "show": {
+                    "0": false, 
+                    "1": false
+                }
+            }, 
+            "status": {
+                "category": "status", 
+                "show": {
+                    "0": false, 
+                    "1": false
+                }
+            }, 
+            "block_dodge": {
+                "category": "block_dodge", 
+                "show": {
+                    "0": false, 
+                    "1": false
+                }
+            }
+        }
+    }, 
+    "battle": {
+        "color": "#ff0000", 
+        "group": "battle", 
+        "categories": {
+            "hitevents": {
+                "category": "hitevents", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }, 
+            "status": {
+                "category": "status", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }, 
+            "battle": {
+                "category": "battle", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }, 
+            "breath": {
+                "category": "breath", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }, 
+            "gore": {
+                "category": "gore", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }, 
+            "strikes": {
+                "category": "strikes", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }
+        }
+    }, 
+    "battle_trance": {
+        "color": "#ff00ff", 
+        "group": "battle_trance", 
+        "categories": {
+            "trance": {
+                "category": "trance", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "JobSuspension": {
+        "color": "#c60000", 
+        "group": "JobSuspension", 
+        "categories": {
+            "JobSuspension": {
+                "category": "JobSuspension", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "Production": {
+        "color": "#930000", 
+        "group": "Production", 
+        "categories": {
+            "EquipmentMismatch": {
+                "category": "EquipmentMismatch", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }, 
+            "foodAndDrinkCancelations": {
+                "category": "foodAndDrinkCancelations", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }, 
+            "creatureInterruption": {
+                "category": "creatureInterruption", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }, 
+            "production": {
+                "category": "production", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }, 
+            "farmCancelations": {
+                "category": "farmCancelations", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }, 
+            "misc": {
+                "category": "misc", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }, 
+            "cancelations": {
+                "category": "cancelations", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }
+        }
+    }, 
+    "misc": {
+        "color": "#FFF", 
+        "group": "misc", 
+        "categories": {
+            "spam": {
+                "category": "spam", 
+                "show": {
+                    "0": false, 
+                    "1": false
+                }
+            }
+        }
+    }, 
+    "masterpiece": {
+        "color": "#0080c0", 
+        "group": "masterpiece", 
+        "categories": {
+            "Other/All": {
+                "category": "Other/All", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "beekeeping": {
+        "color": "#ffff80", 
+        "group": "beekeeping", 
+        "categories": {
+            "beekeeping": {
+                "category": "beekeeping", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "deaths": {
+        "color": "#ffff00", 
+        "group": "deaths", 
+        "categories": {
+            "directDeaths": {
+                "category": "directDeaths", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }, 
+            "foundDeaths": {
+                "category": "foundDeaths", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }, 
+            "slaughtering": {
+                "category": "slaughtering", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "dfhack": {
+        "color": "#ffffff", 
+        "group": "dfhack", 
+        "categories": {
+            "elected": {
+                "category": "elected", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }, 
+            "misc": {
+                "category": "misc", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }, 
+            "workshopCompletion": {
+                "category": "workshopCompletion", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }, 
+            "automation": {
+                "category": "automation", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "fishing": {
+        "color": "#0000ff", 
+        "group": "fishing", 
+        "categories": {
+            "Other/All": {
+                "category": "Other/All", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "interactions": {
+        "color": "#ff0000", 
+        "group": "interactions", 
+        "categories": {
+            "necromancy": {
+                "category": "necromancy", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }, 
+            "werebeast": {
+                "category": "werebeast", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "intruders": {
+        "color": "#ff0000", 
+        "group": "intruders", 
+        "categories": {
+            "beast": {
+                "category": "beast", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }, 
+            "intruders": {
+                "category": "intruders", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }, 
+            "ghost": {
+                "category": "ghost", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "mandates": {
+        "color": "#ffffff", 
+        "group": "mandates", 
+        "categories": {
+            "mandates": {
+                "category": "mandates", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "mining": {
+        "color": "#80ffff", 
+        "group": "mining", 
+        "categories": {
+            "enviromentalHazard": {
+                "category": "enviromentalHazard", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }, 
+            "mining": {
+                "category": "mining", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "moods": {
+        "color": "#ff00ff", 
+        "group": "moods", 
+        "categories": {
+            "moods": {
+                "category": "moods", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }, 
+            "depression": {
+                "category": "depression", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }, 
+            "tantrum": {
+                "category": "tantrum", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "named_item": {
+        "color": "#00ffff", 
+        "group": "named_item", 
+        "categories": {
+            "Other/All": {
+                "category": "Other/All", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "animals": {
+        "color": "#00ff40", 
+        "group": "animals", 
+        "categories": {
+            "training": {
+                "category": "training", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }, 
+            "vermin": {
+                "category": "vermin", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }, 
+            "grown": {
+                "category": "grown", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }, 
+            "birth": {
+                "category": "birth", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }, 
+            "drink": {
+                "category": "drink", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }, 
+            "catAdoption": {
+                "category": "catAdoption", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "social": {
+        "color": "#80ff00", 
+        "group": "social", 
+        "categories": {
+            "missing": {
+                "category": "missing", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }, 
+            "social": {
+                "category": "social", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "profession": {
+        "color": "#c0c0c0", 
+        "group": "profession", 
+        "categories": {
+            "professionChange": {
+                "category": "professionChange", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }
+        }
+    }, 
+    "migrants": {
+        "color": "#954a4a", 
+        "group": "migrants", 
+        "categories": {
+            "migrants": {
+                "category": "migrants", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "seasons": {
+        "color": "#ffff80", 
+        "group": "seasons", 
+        "categories": {
+            "seasons": {
+                "category": "seasons", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "weather": {
+        "color": "#ffffff", 
+        "group": "weather", 
+        "categories": {
+            "weather": {
+                "category": "weather", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "trading": {
+        "color": "#80ff80", 
+        "group": "trading", 
+        "categories": {
+            "trading": {
+                "category": "trading", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "system": {
+        "color": "#808080", 
+        "group": "system", 
+        "categories": {
+            "seed": {
+                "category": "seed", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }, 
+            "system": {
+                "category": "system", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }, 
+            "load": {
+                "category": "load", 
+                "show": {
+                    "0": false, 
+                    "1": true
+                }
+            }
+        }
+    }, 
+    "emotion": {
+        "color": "#804000", 
+        "group": "emotion", 
+        "categories": {
+            "emotion": {
+                "category": "emotion", 
+                "show": {
+                    "0": true, 
+                    "1": false
+                }
+            }
+        }
+    }, 
+    "UNKNOWN": {
+        "color": "#FF0", 
+        "group": "UNKNOWN", 
+        "categories": {
+            "unmatchedString": {
+                "category": "unmatchedString", 
+                "show": {
+                    "0": true, 
+                    "1": true
+                }
+            }
+        }
+    }
+}

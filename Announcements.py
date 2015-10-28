@@ -22,7 +22,6 @@ class announcement(object):
                 return "%s\n"%self.text
             else:
                 return self.text
-
   
     def insert(self,announcement_window):
         window = announcement_window.id
@@ -45,7 +44,6 @@ class announcement(object):
         return Filters.expressions.get_show(self.get_group(), self.get_category(), window) 
     
     def get_color(self):
-        #return self.group.color
         return Filters.expressions.get_color(self.get_group())
   
     def print_text(self):

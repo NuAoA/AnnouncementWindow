@@ -6,11 +6,10 @@ import re
 class gamelog(object):
     def __init__(self):
         self.file = None
-
         
     def connect(self):
         if os.path.isfile(Config.settings.get_gamelog_path()):            
-            self.file = io.open(Config.settings.get_gamelog_path(),'rb')
+            self.file = io.open(Config.settings.get_gamelog_path(),'r')
             self.file.seek(0,2) #Move to the end of the file
             return True
         else:
@@ -32,14 +31,12 @@ class gamelog(object):
         lines = []
         if self.file:
             self.file.seek(0,0)
-            exp = re.compile(b'\*\* Loading Fortress \*\*')
+            exp = re.compile('\*\* Loading Fortress \*\*')
             for line in self.file:
                 if exp.match(line):
                     lines = []
                 lines.append(line)
-        return self.get_new_announcements(list_=lines)
-
-            
+        return self.get_new_announcements(list_=lines)            
                       
     def new(self):
         return self.get_new_announcements()

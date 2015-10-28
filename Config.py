@@ -3,37 +3,30 @@ if sys.version_info.major == 2:
     import ConfigParser
 elif sys.version_info.major == 3:
     import configparser as ConfigParser
-    
+        
 import pickle
 import os
-
-READ = 'r' if not (sys.version_info.major == 3) else 'rb'
-WRITE = 'w' if not (sys.version_info.major == 3) else 'wb'
 
 class config(object):
     def __init__(self):
         self.parser = ConfigParser.ConfigParser()        
         self.filepath =            "Settings.cfg"
-        self.filters_path =        "filters.txt"
-        if sys.version_info.major == 2:       
-            self.gui_data =            "gui.dat"        
-            self.filters_pickle_path = "filters.dat"
-        elif sys.version_info.major == 3:
-            self.gui_data =            "gui.dat3"        
-            self.filters_pickle_path = "filters.dat3"      
+        self.filters_path =        "filters.txt"    
+        self.gui_data =            "Data/gui.dat"        
+        self.filters_pickle_path = "Data/filters.dat"    
         self.section ="Settings"
         self.init_var()
         self.load() 
         
     def load_gui_data(self):
         if os.path.isfile(self.gui_data):
-            with open(self.gui_data,READ) as fi:
+            with open(self.gui_data,'rb') as fi:
                 return pickle.load(fi)
         return None
     
     def save_gui_data(self,data):
-        with open(self.gui_data,WRITE) as fi:
-            pickle.dump(data,fi)
+        with open(self.gui_data,'wb') as fi:
+            pickle.dump(data,fi,protocol=0)
             
     def init_var(self):
         self.gamelogpath = os.getcwd()
@@ -60,7 +53,7 @@ class config(object):
             self.trim_announcements[1] = self.parser.getint(self.section,'trim_announcements_1')
 
     def save(self):
-        with open(self.filepath, 'w') as fi:
+        with open(self.filepath,'w') as fi:
             self.parser.write(fi)
         
     def get_gamelog_path(self):
