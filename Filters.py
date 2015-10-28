@@ -39,7 +39,6 @@ class subgroup(object):
         if type(re_expression) is str:
             re_expression = str.encode(re_expression)
         self.re_expressions.append(re.compile(re_expression))
-        print('loaded expression: %s'%(re_expression))
         
     def check_expression(self,string):
         for expression in self.re_expressions:
