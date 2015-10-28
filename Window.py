@@ -2,7 +2,6 @@ import sys
 if sys.version_info.major != 2:
     raise UserWarning("This program requires python 2")
 import Tkinter
-import ttk
 import tkFileDialog
 import tkColorChooser
 import tkFont
