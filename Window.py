@@ -30,6 +30,8 @@ def dict_to_font(dict_):
 class config_gui(Tkinter.Toplevel):
     def __init__(self, parent, filter_):
         Tkinter.Toplevel.__init__(self, parent)
+        # Hide for now
+        self.withdraw()
         self.parent = parent
         self.filter = filter_
         self.pack_propagate(False)
@@ -92,7 +94,8 @@ class config_gui(Tkinter.Toplevel):
                 button_subgroup[0].grid(column=1, row=i, sticky="NSEW", pady=2)
                 button_subgroup[1].grid(column=2, row=i, sticky="wNS", pady=2)
                 i += 1
-
+        # Become visible
+        self.deiconify()
     def checkbutton(self, group, subgroup):
         state = True
         if self.filter.get_show(group, subgroup, self.parent.id):
@@ -261,10 +264,17 @@ class main_gui(Tkinter.Tk):
             main_menu = Tkinter.Menu(self.menu, tearoff=0)
         else:
             main_menu = self.menu
-        main_menu.add_command(label="Set Directory", command=self.askpath)
+
+        options_menu = Tkinter.Menu(self, tearoff=0)
+        options_menu.add_command(label="Edit filters.txt", command=self.edit_filters)
+        options_menu.add_command(label="Open filters.txt", command=self.open_filters)
+
+        settings_menu = Tkinter.Menu(self, tearoff=0)
+        settings_menu.add_command(label="Set Directory", command=self.askpath)
+
+        main_menu.add_cascade(label="Settings", menu=settings_menu)
         main_menu.add_separator()
-        main_menu.add_command(label="Edit filters.txt", command=self.edit_filters)
-        main_menu.add_command(label="Open filters.txt", command=self.open_filters)
+        main_menu.add_cascade(label="Options", menu=options_menu)
         # self.menu.add_command(label="Dump CPU info",command = self.dump_info)
         if util.platform.osx:
             self.menu.add_cascade(label="Options", menu=main_menu)
@@ -288,7 +298,6 @@ class main_gui(Tkinter.Tk):
         self.panel.add(self.announcement_windows[1])
         self.panel.update_idletasks()
         self.panel.sash_place(0, 0, self.gui_data["sash_place"])  # TODO: update to support multiple sashes
-
 
     def gen_tags(self):
         Filters.expressions.reload()
