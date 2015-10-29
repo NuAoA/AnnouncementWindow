@@ -303,10 +303,10 @@ class main_gui(Tkinter.Tk):
         self.destroy()
 
     def edit_filters(self):
-        Editor.TextEditor(Filters.expressions.filters_path)
+        Editor.TextEditor(Config.settings.filters_path)
 
     def open_filters(self):
-        Editor.native_open(Filters.expressions.filters_path)
+        Editor.native_open(Config.settings.filters_path)
 
     def askpath(self):
         path = Config.settings.get_gamelog_path()

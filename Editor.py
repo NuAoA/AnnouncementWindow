@@ -2,6 +2,7 @@ import io
 import os
 import subprocess
 import sys
+import Config
 if sys.version_info.major == 2:
     import Tkinter
     import tkMessageBox
@@ -19,7 +20,7 @@ def native_open(filename):
         elif util.platform.linux:
             subprocess.call(("xdg-open", filename))
     except Exception:
-        pass
+        TextEditor(Config.settings.filters_path)
 
 class TextEditor(Tkinter.Toplevel):
     def __init__(self, filename):
