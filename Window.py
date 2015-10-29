@@ -14,25 +14,15 @@ else:
 
 import tkFontChooser
 import Config
-import GamelogReader, Filters
+import Editor
+import Filters
+import GamelogReader
+import util
 import subprocess, os
 from functools import partial
 from collections import OrderedDict
 
 # import psutil,time
-
-platform_win = (sys.platform == 'win32')
-platform_osx = (sys.platform == 'darwin')
-platform_linux = (sys.platform == 'linux2')
-platform_unix = (platform_osx or platform_linux)
-mouse_buttons = {
-    'left': 1,
-    'right': 3 if not platform_osx else 2,
-    'middle': 2 if not platform_osx else 3
-}
-
-for k in mouse_buttons:
-    mouse_buttons[k] = '<Button-%i>' % mouse_buttons[k]
 
 def dict_to_font(dict_):
     return tkFont.Font(family=dict_["family"], size=dict_["size"], weight=dict_["weight"], slant=dict_["slant"], overstrike=dict_["overstrike"], underline=dict_["underline"])
@@ -138,7 +128,7 @@ class announcement_window(Tkinter.Frame):
         self.vsb.pack(side="right", fill="y")
         self.text.config(cursor="")
         self.text.pack(side="left", fill="both", expand=True)
-        self.text.bind(mouse_buttons["right"], self.popup)
+        self.text.bind(util.mouse_buttons.right, self.popup)
 
 
         # link methods
@@ -267,15 +257,16 @@ class main_gui(Tkinter.Tk):
 
     def init_menu(self):
         self.menu = Tkinter.Menu(self, tearoff=0)
-        if platform_osx:
+        if util.platform.osx:
             main_menu = Tkinter.Menu(self.menu, tearoff=0)
         else:
             main_menu = self.menu
         main_menu.add_command(label="Set Directory", command=self.askpath)
         main_menu.add_separator()
-        main_menu.add_command(label="Open Filters.txt", command=self.edit_filters)
+        main_menu.add_command(label="Edit filters.txt", command=self.edit_filters)
+        main_menu.add_command(label="Open filters.txt", command=self.open_filters)
         # self.menu.add_command(label="Dump CPU info",command = self.dump_info)
-        if platform_osx:
+        if util.platform.osx:
             self.menu.add_cascade(label="Options", menu=main_menu)
         self.config(menu=self.menu)
 
@@ -312,16 +303,10 @@ class main_gui(Tkinter.Tk):
         self.destroy()
 
     def edit_filters(self):
-        filepath = Filters.expressions.filters_path
-        try:
-            if platform_osx:
-                subprocess.call(('open', filepath))
-            elif platform_win:
-                os.startfile(filepath)
-            elif platform_linux:
-                subprocess.call(('xdg-open', filepath))
-        except:
-            pass
+        Editor.TextEditor(Filters.expressions.filters_path)
+
+    def open_filters(self):
+        Editor.native_open(Filters.expressions.filters_path)
 
     def askpath(self):
         path = Config.settings.get_gamelog_path()
