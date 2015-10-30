@@ -257,6 +257,7 @@ class main_gui(Tkinter.Tk):
         self.gen_tags()
         # self.parallel()
         self.get_announcements(old=Config.settings.load_previous_announcements)
+        self.pack_announcements()
 
     def init_menu(self):
         self.menu = Tkinter.Menu(self, tearoff=0)
@@ -336,11 +337,16 @@ class main_gui(Tkinter.Tk):
                 for announcement_win in self.announcement_windows.items():
                     announcement_win[1].insert_ann(ann)
             for announcement_win in self.announcement_windows.items():
-                announcement_win[1].text.pack(side="top", fill="both", expand=True)
                 if announcement_win[1].vsb_pos == 1.0:
                     announcement_win[1].yview("end")
                 announcement_win[1].text.config(state="disabled")
         self.after(1000, self.get_announcements)
+
+    def pack_announcements(self):
+        for announcement_win in self.announcement_windows.items():
+            announcement_win[1].text.pack(side="top", fill="both", expand=True)
+            # Why doesn't this always move to the end when you launch with setting: load_previous_announcements = True  ??
+            announcement_win[1].yview("end")
 
     #===========================================================================
     # def parallel(self): #TODO: remove
