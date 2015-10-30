@@ -23,17 +23,6 @@ class announcement(object):
             else:
                 return self.text
 
-    def insert(self, announcement_window):
-        window = announcement_window.id
-        if self.get_show(window):
-            announcement_window.index += 1
-            index = announcement_window.index
-            announcement_window.insert("end", self.get_text(show_group=Config.settings.get_showgroups()))
-            announcement_window.tag_add(self.get_group(), float(index), float(index + 1))
-            announcement_window.tag_config(self.get_group(), foreground=self.get_color())
-            return True
-        return False
-
     def get_group(self):
         return self.group_name
 
