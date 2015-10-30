@@ -260,24 +260,19 @@ class main_gui(Tkinter.Tk):
 
     def init_menu(self):
         self.menu = Tkinter.Menu(self, tearoff=0)
-        if util.platform.osx:
-            main_menu = Tkinter.Menu(self.menu, tearoff=0)
-        else:
-            main_menu = self.menu
 
-        options_menu = Tkinter.Menu(self, tearoff=0)
+        options_menu = Tkinter.Menu(self.menu, tearoff=0)
         options_menu.add_command(label="Edit filters.txt", command=self.edit_filters)
         options_menu.add_command(label="Open filters.txt", command=self.open_filters)
 
-        settings_menu = Tkinter.Menu(self, tearoff=0)
+        settings_menu = Tkinter.Menu(self.menu, tearoff=0)
         settings_menu.add_command(label="Set Directory", command=self.askpath)
 
-        main_menu.add_cascade(label="Settings", menu=settings_menu)
-        main_menu.add_separator()
-        main_menu.add_cascade(label="Options", menu=options_menu)
+        self.menu.add_cascade(label="Settings", menu=settings_menu)
+        self.menu.add_separator()
+        self.menu.add_cascade(label="Options", menu=options_menu)
         # self.menu.add_command(label="Dump CPU info",command = self.dump_info)
-        if util.platform.osx:
-            self.menu.add_cascade(label="Options", menu=main_menu)
+
         self.config(menu=self.menu)
 
     def dump_info(self):
