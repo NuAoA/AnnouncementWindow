@@ -18,6 +18,10 @@ LEFT = Tkinter.LEFT
 RIGHT = Tkinter.RIGHT
 CENTER = Tkinter.CENTER
 
+# TODO list:
+# -> Make it possible to add [groups] and [categories] along with regular expressions (currently you can only edit the expressions)
+# -> add some color to the window
+
 RE_MODIFIED = False
 
 class ExpressionBar(Tkinter.Frame):
