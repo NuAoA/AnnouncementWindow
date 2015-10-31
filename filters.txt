@@ -6,8 +6,12 @@
 ## -> re_expression must follow standard regular expression syntax.           ##
 ##    -> see https://docs.python.org/2/library/re.html for more information.  ##
 ##                                                                            ##
-## The announcements will be compared in the same order as this file. The     ##
-## first match found will determine what group that announcement belongs to.  ## 
+## The announcements will be compared in order that the tags are listed.      ##
+## The first instance of a tag will check every expression with that tag      ##
+## before moving onto the next tag in the file. Entries with the same tags    ##
+## will be checked in the order that they appear.                             ##
+## The order of the expressions listed in the filters configuration window    ##
+## is the same order that they are compared.                                  ##
 ##																			  ##
 ## For example, adding '[everything][] "(.+)"' to the start of the file will  ##
 ## match every announcement/report and no other matches will be found.        ##
