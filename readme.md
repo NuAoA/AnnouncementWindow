@@ -14,7 +14,7 @@ This program was written for python 2.7.10, but now has python 3 support! It sho
 
 If you are running windows, download the latest release (https://github.com/NuAoA/AnnouncementWindow/releases) and unzip the folder anywhere on your computer. Click *AnnouncementWindow.exe* to launch.
 
-If you are not on windows, or just want to run the code directly, you will need to have python 2 installed on your computer. Download the repository. The program is launched by running the script *run.py*.
+If you are not on windows, or just want to run the code directly, you will need to have python installed on your computer. Download the repository. The program is launched by running the script *run.py*.
 
 ### **Setup**
 
@@ -22,13 +22,17 @@ The first time you start Announcement Window+, you need to connect the program t
 
 ### **Custom Filters**
 
-If you want to take a look at how the announcements are filtered, right click the window and click ```Toggle Tags```. These filters are loaded from the file found at ```Open Filters.txt```. It uses regular expressions to group announcements into categories for easy filtering (see: https://docs.python.org/2/library/re.html). Anything that you find in your *gamelog.txt* file will be checked against these expressions. The expressions are checked in the order they appear in the file, so the first match it finds will determine what group/category the announcement falls under.
+If you want to take a look at how the announcements are filtered, right click the window and click ```Toggle Tags``` to see how each announcement is tagged. These filters and tags are loaded from the file found at ```Open Filters.txt```, and can be configured by opening the ```Filters Configuration``` window. 
+
+Each filter uses regular expressions to group announcements into categories for easy filtering (see: https://docs.python.org/2/library/re.html). Anything that you find in your *gamelog.txt* file will be checked against these expressions. 
+
 Each tag follows the format:
 
 	[group][category] "regular_expression"
     
 Where ```[group]``` is a tag to set a separate color for each matched announcement. Whatever color you set will carry over to every window. ```[category]``` is a separate tag for each window, and is used to set if the announcement should be shown in the window or not.
 
+The expressions are checked in the order that their tags appear in the file. This means that the first instance of [group] that is seen will cause every [category] and expression that has that group tag to be checked before moving on to other tags in the file. Filters with the same tag are checked sequentially. You can check ```Filters Configuration``` to see the order that the program loads the filters.
 
 #### Here's a typical example:
 
@@ -45,7 +49,7 @@ Now you can now edit the color for the new group ```[intruders_Thief]```.
 
 ### **Settings**
 
-There are a few options in *settings.cfg* that change how the program functions. For the most part they allow you to change how demanding this program is on your CPU along with how much memory it uses, which is only really a concern if you are running a [danger room](http://dwarffortresswiki.org/index.php/DF2014:Danger_room) ("*The Dwarf blocks The spinning *apricot wood training spear* with the -copper shield-!*" spam) or otherwise are generating a lot of announcements. Note, periodically clearing the windows (maybe once per hour) will keep even the worst offenders under ~150mb of ram. Also, if you are running multiple cores (its 2015 for god sakes) CPU usage is not much of a concern since Dwarf Fortress only uses a single core. 
+There are a few options in *settings.cfg* that change how the program functions. For the most part they allow you to change how demanding this program is on your CPU along with how much memory it uses, which is only really a concern if you are running a [danger room](http://dwarffortresswiki.org/index.php/DF2014:Danger_room) ("*The Dwarf blocks The spinning *apricot wood training spear* with the -copper shield-!*" spam) or otherwise are generating hundreds of announcements per second. Note, periodically clearing the windows (maybe once per hour) will keep even the worst offenders under ~150mb of ram. Also, if you are running multiple cores (its 2015 for god sakes) CPU usage is not much of a concern since Dwarf Fortress only uses a single core. 
 
 * ```gamelog_path```: 
 
@@ -53,7 +57,7 @@ Lets you manually set the path to your *gamelog.txt* file.
 
 * ```load_previous_announcements```:
 
-When the program is opened, this option will load all announcements in *gamelog.txt* since the last time a fortress was loaded.
+When the program is opened, this option will load all announcements in *gamelog.txt* since the last time a fortress was loaded. If you open the program with this option before loading your fortress, it will load the announcements from your last game session. 
 
 * ```save_hidden_announcements```: 
 
