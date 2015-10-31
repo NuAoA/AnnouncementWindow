@@ -1,6 +1,6 @@
 Announcement Window+ Readme
 Author: NuAoA
-Version: 1.0
+Version: 1.1
 Github: https://github.com/NuAoA/AnnouncementWindow
 
 Announcement Window+ is a python application that interfaces with Dwarf Fortress to print 
