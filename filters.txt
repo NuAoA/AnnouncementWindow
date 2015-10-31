@@ -2,12 +2,16 @@
 ## Feel free to tweak this file as you wish, each line must follow the format:##
 ## [group][subgroup] "re_expression"                                          ##
 ## -> [group] -> tag to define a global color for all matches                 ##
-## -> [catagory] -> tag to toggle visibility in each window. 				  ##
+## -> [category] -> tag to toggle visibility in each window. 				  ##
 ## -> re_expression must follow standard regular expression syntax.           ##
 ##    -> see https://docs.python.org/2/library/re.html for more information.  ##
 ##                                                                            ##
-## The announcements will be compared in the same order as this file. The     ##
-## first match found will determine what group that announcement belongs to.  ## 
+## The announcements will be compared in order that the tags are listed.      ##
+## The first instance of a tag will check every expression with that tag      ##
+## before moving onto the next tag in the file. Entries with the same tags    ##
+## will be checked in the order that they appear.                             ##
+## The order of the expressions listed in the filters configuration window    ##
+## is the same order that they are compared.                                  ##
 ##																			  ##
 ## For example, adding '[everything][] "(.+)"' to the start of the file will  ##
 ## match every announcement/report and no other matches will be found.        ##
@@ -22,8 +26,9 @@
 ################################################################################
 
 #battle_minor is mostly stuff that shows up when dwarfs train
-[battle_minor][hitevents_miss] "(.+), lightly tapping the target!"
-[battle_minor][hitevents_miss] "(.+), but the attack glances away!"
+
+[battle_minor][hitevents_miss] "The (.+), lightly tapping the target!"
+[battle_minor][hitevents_miss] "The (.+), but the attack glances away!"
 [battle_minor][hitevents_miss] "(.+), but the attack is deflected by The (.+)'s (.+)!"
 [battle_minor][hitevents_miss] "(.+), but it is deflected by The (.+)'s (.+)!"
 [battle_minor][hitevents_miss] "The (.+) strikes at The (.+) but the shot is parried!"
@@ -41,6 +46,20 @@
 [battle_minor][status] "The (.+) collapses and falls to the ground from over-exertion\."
 [battle_minor][status] "The (.+) looks surprised by the ferocity of ((The (.+)'s)|(Your)) onslaught!"
 
+[battle_minor][block_dodge] "The (.+) (blocks|jumps away|jumps out|scrambles out of|scrambles away|rolls out of|rolls away|falls over).+"
+[battle_minor][block_dodge] "(((.+) jumps)|(You jump)) away from The flying (.+)!"
+[battle_minor][block_dodge] "(((.+) jumps)|(You jump)) away from the (.+)!"
+[battle_minor][block_dodge] "(.+) bats The ((spinning)|(flying)) (.+) out of the air!"
+[battle_minor][block_dodge] "(.+) scrambles away from The flying (.+)!"
+[battle_minor][block_dodge] "(.+) strikes at (.+) but the shot is blocked with (.+)!"
+[battle_minor][block_dodge] "(((.+) misses)|(You miss)) (.+)!"
+[battle_minor][block_dodge] "(.+) jumps away from The spinning (.+)!"
+[battle_minor][block_dodge] "(.+) blocks The spinning (.+)!"
+[battle_minor][block_dodge] "(.+) bats The spinning (.+) aside!"
+[battle_minor][block_dodge] "(.+) scrambles away from The spinning (.+)!"
+[battle_minor][block_dodge] "(.+) rolls away from The spinning (.+)!"
+[battle_minor][block_dodge] "The (.+) bats The (.+) aside.+!"
+
 [battle][hitevents] "The (.+), (bruising|chipping|shattering|fracturing|denting) (it|the).+"
 [battle][hitevents] "The (.+), jamming the (.+) through the (.+)'s (.+) and shattering the (.+)'s (.+)!"
 [battle][hitevents] "The (.+), jamming the (.+) through the (.+)'s (.+) and fracturing the (.+)'s (.+)!"
@@ -57,21 +76,40 @@
 [battle][hitevents] "The (.+) strikes The (.+)"
 
 [battle][status] "The (.+) (vomits|retches|looks sick|looks even more sick|trouble breathing).+"
-
-
-[battle_minor][block_dodge] "The (.+) (blocks|jumps away|jumps out|scrambles out of|scrambles away|rolls out of|rolls away|falls over).+"
-[battle_minor][block_dodge] "(((.+) jumps)|(You jump)) away from The flying (.+)!"
-[battle_minor][block_dodge] "(((.+) jumps)|(You jump)) away from the (.+)!"
-[battle_minor][block_dodge] "(.+) bats The ((spinning)|(flying)) (.+) out of the air!"
-[battle_minor][block_dodge] "(.+) scrambles away from The flying (.+)!"
-[battle_minor][block_dodge] "(.+) strikes at (.+) but the shot is blocked with (.+)!"
-[battle_minor][block_dodge] "(((.+) misses)|(You miss)) (.+)!"
-[battle_minor][block_dodge] "(.+) jumps away from The spinning (.+)!"
-[battle_minor][block_dodge] "(.+) blocks The spinning (.+)!"
-[battle_minor][block_dodge] "(.+) bats The spinning (.+) aside!"
-[battle_minor][block_dodge] "(.+) scrambles away from The spinning (.+)!"
-[battle_minor][block_dodge] "(.+) rolls away from The spinning (.+)!"
-[battle_minor][block_dodge] "The (.+) bats The (.+) aside.+!"
+[battle][status] "(.+) skids along the ground!"
+[battle][status] "The (.+) skips across the water!"
+[battle][status] "(.+) skids along the ground, (.+)!"
+[battle][status] "(.+) skids along the ground and the (.+) splits in gore!"
+[battle][status] "(.+) has been stunned!"
+[battle][status] "(.+) has been stunned again!"
+[battle][status] "(.+) is no longer stunned\."
+[battle][status] "(.+) gives in to pain\."
+[battle][status] "(.+) passes out\."
+[battle][status] "(.+) looks sick!"
+[battle][status] "(.+) looks even more sick!"
+[battle][status] "(.+) vomits\."
+[battle][status] "(.+) retches\."
+[battle][status] "The vomit disappears into the water\."
+[battle][status] "The vomit burns away in the lava\."
+[battle][status] "The vomit splatters into the shallow puddle of water\."
+[battle][status] "(.+) is having trouble breathing!"
+[battle][status] "(.+) is having more trouble breathing!"
+[battle][status] "(.+) has become enraged!"
+[battle][status] "(.+) is no longer enraged\."
+[battle][status] "(.+) has been knocked unconscious!"
+[battle][status] "(.+) passes out from exhaustion\."
+[battle][status] "(.+) regains consciousness\."
+[battle][status] "(.+) is feeling sluggish!"
+[battle][status] "(.+) looks numb!"
+[battle][status] "(.+) is partially paralyzed!"
+[battle][status] "(.+) is completely paralyzed!"
+[battle][status] "(.+) has fully overcome the paralysis\."
+[battle][status] "(.+) has been bitten by (.+)!"
+[battle][status] "(.+) is injected into the (.+)'s (.+) blood!"
+[battle][status] "(.+) cancels (.+): Paralyzed\."
+[battle][status] "(.+) cancels (.+): Resting injury\."
+[battle][status] "[tT]he (.+) rolls into a ball\."
+[battle][status] "[tT]he (.+) unrolls\."
 
 [battle][battle] "(.+) is propelled away by the force of the blow!"
 [battle][battle] "(.+) counterstrikes!"
@@ -106,8 +144,6 @@
 [battle][battle] "(.+) bends (.+) and (.+) collapses!"
 [battle][battle] "The (.+) takes The (.+) down by the (.+) with The (.+)'s (.+)!"
 [battle][battle] "The (.+) skids along the ground through the (.+)!"
-
-
 [battle][battle] "(.+) cancels (.+): Too injured\."
 [battle][battle] "The (.+) attack is interrupted!"
 
@@ -146,51 +182,10 @@
 [battle][gore] "(.+) in the (.+) with (.+) and the injured part is cloven asunder!"
 [battle][gore] "(.+) blood is sucked out of the wound!"
 
-
-
-[battle][status] "(.+) skids along the ground!"
-[battle][status] "The (.+) skips across the water!"
-[battle][status] "(.+) skids along the ground, (.+)!"
-[battle][status] "(.+) skids along the ground and the (.+) splits in gore!"
-[battle][status] "(.+) has been stunned!"
-[battle][status] "(.+) has been stunned again!"
-[battle][status] "(.+) is no longer stunned\."
-[battle][status] "(.+) gives in to pain\."
-[battle][status] "(.+) passes out\."
-[battle][status] "(.+) looks sick!"
-[battle][status] "(.+) looks even more sick!"
-[battle][status] "(.+) vomits\."
-[battle][status] "(.+) retches\."
-[battle][status] "The vomit disappears into the water\."
-[battle][status] "The vomit burns away in the lava\."
-[battle][status] "The vomit splatters into the shallow puddle of water\."
-[battle][status] "(.+) is having trouble breathing!"
-[battle][status] "(.+) is having more trouble breathing!"
-[battle][status] "(.+) has become enraged!"
-[battle][status] "(.+) is no longer enraged\."
-[battle_trance][trance] "(.+) has entered a martial trance!"
-[battle_trance][trance] "(.+) has left the martial trance\."
-[battle][status] "(.+) has been knocked unconscious!"
-[battle][status] "(.+) passes out from exhaustion\."
-[battle][status] "(.+) regains consciousness\."
-[battle][status] "(.+) is feeling sluggish!"
-[battle][status] "(.+) looks numb!"
-[battle][status] "(.+) is partially paralyzed!"
-[battle][status] "(.+) is completely paralyzed!"
-[battle][status] "(.+) has fully overcome the paralysis\."
-[battle][status] "(.+) has been bitten by (.+)!"
-[battle][status] "(.+) is injected into the (.+)'s (.+) blood!"
-[battle][status] "(.+) cancels (.+): Paralyzed\."
-[battle][status] "(.+) cancels (.+): Resting injury\."
-[battle][status] "[tT]he (.+) rolls into a ball\."
-[battle][status] "[tT]he (.+) unrolls\."
-
-
-
 [battle][strikes] "The (.+) (leaps at|punches|catches|snatches at|stabs|grabs|hacks|pushes|misses|slashes|shakes|blocks|gores|strangles|strikes|scratches|kicks|attacks|lashes|slaps|bashes|bites|strikes at|punches|releases|throws|takes|locks|bends|places a chokehold on|gouges) The (.+)"
 
-
-
+[battle_trance][trance] "(.+) has entered a martial trance!"
+[battle_trance][trance] "(.+) has left the martial trance\."
 
 [JobSuspension][JobSuspension] "The dwarves suspended a linkage from (.+) Lever\."
 [JobSuspension][JobSuspension] "The dwarves suspended a linkage from Pressure Plate\."
@@ -233,34 +228,12 @@
 [Production][production] "Jobs removed from unpowered Magma Smelter\."
 [Production][production] "(.+) has altered the prices of goods\."
 [Production][production] "(.+) has been completed\."
+
 [Production][farmCancelations] "(.+), (.+) cancels Plant Seeds: (.+)"
+
 [Production][misc] "(.+) cancels (.+): (.+)"
+
 [Production][cancelations] "The (.+) were unable to complete the (.+)\."
-
-# [production][cancelations] "(.+) cancels Store Item in Barrel: Drop-off inaccessible."
-# [production][cancelations] "(.+) cancels (.+): Could not find path\."
-# [production][cancelations] "(.+) cancels Store Owned Item: Item inaccessible\."
-# [production][cancelations] "(.+) cancels Handle Large Creature: Animal inaccessible\."
-# [production][cancelations] "(.+) cancels Get Provisions: Item inaccessible\."
-# [production][cancelations] "(.+) cancels Store Item in ((Stockpile)|(Bin)|(Bag)): Item inaccessible\."
-# [production][cancelations] "(.+) cancels Store Item in ((Stockpile)|(Bin)|(Bag)): Drop-off inaccessible\."
-# [production][cancelations] "(.+) cancels Dump Item: Item inaccessible\."
-# [production][cancelations] "(.+) cancels Dump Item: Drop-off inaccessible\."
-# [production][cancelations] "(.+) cancels Place Item in Tomb: Item inaccessible\."
-# [production][cancelations] "(.+) cancels (.+): Job item misplaced."
-# [production][cancelations] "(.+) cancels (.+): Job item lost or destroyed\."
-# [production][cancelations] "(.+) cancels (.+): Forbidden area\."
-# [production][cancelations] "(.+) cancels (.+): Dangerous terrain\."
-# [production][cancelations] "(.+) cancels (.+): Exhausted\."
-# [production][cancelations] "(.+) cancels (.+): Patient not resting\."
-# [production][cancelations] "(.+) cancels Load Ballista: No ammunition\."
-# [production][cancelations] "(.+) cancels Slaughter Animal: No creature\."
-# [production][cancelations] "(.+) cancels Dig: Inappropriate dig square\."
-# [production][cancelations] "(.+) cancels Train War Animal: No creature\." 
-# [production][cancelations] "(.+) cancels (.+): Horrified\."
-# [production][cancelations] "(.+) cancels (.+): Unconscious\."
-
-
 
 [misc][spam] "x\d+"
 [misc][spam] "\s+"
@@ -303,7 +276,6 @@
 
 [deaths][slaughtering] "(.+) has been slaughtered\."
 
-
 [dfhack][elected] "(.+), (.+) has been re-elected\."
 [dfhack][elected] "(.+) has been elected mayor\."
 [dfhack][elected] "(.+) became mayor\."
@@ -311,6 +283,7 @@
 [dfhack][elected] "Expedition leader was replaced by mayor\."
 [dfhack][elected] "(.+) became expedition leader\."
 [dfhack][elected] "Expedition leader position is now vacant\."
+
 [dfhack][misc] "Siege was broken\."
 [dfhack][misc] "(.+) is now rusty (.+)\."
 [dfhack][misc] "(.+) is now very rusty (.+)\."
@@ -320,7 +293,9 @@
 [dfhack][misc] "(.+) has became Accomplished (.+)\."
 [dfhack][misc] "(.+) has became Legendary (.+)\."
 [dfhack][misc] "(.+): I have mastered (.+)\.  That was very satisfying!"
+
 [dfhack][workshopCompletion] "(.+) was built\."
+
 [dfhack][automation] "Marked \d+ items (to|for) (.+)"
 
 [fishing][] "There is nothing to catch in the (.+)\."
@@ -335,6 +310,7 @@
 [intruders][beast] "The Forgotten Beast (.+) has come!  ((A)|(An)) (.+)"
 [intruders][beast] "The (.+) Titan (.+) has come!  ((A)|(An)) (.+)"
 [intruders][beast] "The (.+) has come!  ((A)|(An)) (.+)"
+
 [intruders][intruders] "The dead walk\.  Hide while you still can!"
 [intruders][intruders] "A vile force of darkness has arrived!"
 [intruders][intruders] "An ambush!  Curse them!"
@@ -357,7 +333,6 @@
 [intruders][ghost] "(.+) has grown to become a Ghost\."
 [intruders][ghost] "(.+) is following (.+)!"
 [intruders][ghost] "a (.+) has been misplaced.  No doubt (.+), Ghostly (.+) is to blame!"
-
 
 [mandates][mandates] "(.+) has mandated the construction of certain goods\."
 [mandates][mandates] "(.+) has imposed a ban on certain exports\."
@@ -399,8 +374,6 @@
 [moods][moods] "(.+) is stricken by melancholy!"
 [moods][moods] "(.+) has claimed a (.+)\."
 [moods][moods] "(.+) has created (.+), a (.+)!"
-[named_item][] "(.+) has grown attached to a (.+)!"
-[named_item][] "(.+) has bestowed( ?) the name (.+) upon a (.+)!"
 
 [moods][depression] "(.+), (.+) is stumbling around obliviously!"
 [moods][depression] "(.+), (.+) has slipped into depression\.\.\."
@@ -409,6 +382,9 @@
 [moods][tantrum] "(.+) is throwing a tantrum!"
 [moods][tantrum] "(.+) has calmed down\."
 [moods][tantrum] "(.+) cancels (.+): Throwing tantrum\."
+
+[named_item][] "(.+) has grown attached to a (.+)!"
+[named_item][] "(.+) has bestowed( ?) the name (.+) upon a (.+)!"
 
 [animals][training] "(.+) has reverted to a wild state!"
 [animals][training] "(.+) has forgotten ((her)|(his)) training!"
@@ -420,6 +396,7 @@
 [animals][vermin] "(.+) has gnawed its way out of confinement!"
 
 [animals][grown] "An animal has grown to become a (.+)"
+
 [animals][birth] "(.+) has given birth to (.+)"
 [animals][birth] "(.+) have hatched\."
 
@@ -447,6 +424,7 @@
 [social][social] "(.+) and the surrounding lands have been made a county\."
 [social][social] "(.+) and the surrounding lands have been made a duchy\."
 [social][social] "(.+), being the rightful heir, has inherited the position of ((king)|(queen)) of The (.+)\."
+
 [profession][professionChange] "(.+) has become a (.+)\."
 
 [migrants][migrants] "The fortress attracted no migrants this season\."
@@ -490,9 +468,6 @@
 [system][seed] "Name Seed: (.+)"
 [system][seed] "Creature Seed: (.+)"
 
-[emotion][emotion] "(.+), (.+): (.+)"
-[emotion][emotion] "(.+): (.+)"
-
 [system][system] "\*\*\* STARTING NEW GAME \*\*\*"
 [system][system] "Generating world using parameter set (.+)"
 [system][system] "\*\* Starting New Outpost \*\*"
@@ -501,4 +476,10 @@
 [system][system] "\*\* Loading Fortress \*\*"
 [system][system] "\*\* Starting New Arena \*\*"
 [system][system] "Loaded (.+) at coordinates (.+)"
+
 [system][load] "Loaded the fortress (.+)"
+
+[emotion][emotion] "(.+), (.+): (.+)"
+[emotion][emotion] "(.+): (.+)"
+
+

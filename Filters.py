@@ -152,7 +152,8 @@ class announcement_filter(object):
                             for cat in group[1]['categories'].items():
                                 c = g.lookup_category(cat[0])
                                 if c:
-                                    g.set_show(cat[0], window, cat[1]["show"][str(window)])
+                                    if str(window) in cat[1]["show"]:
+                                        g.set_show(cat[0], window, cat[1]["show"][str(window)])
                                     g.set_color(group[1]['color'])
 
 
@@ -209,6 +210,31 @@ class announcement_filter(object):
             return g.get_show(w, category)
         else:
             return False
+
+    def save_filter_expressions(self):
+        line_list = []
+        # Copy info at start of file:
+        with open(self.filters_path, 'r') as fi:
+            for line in fi:
+                if not re.match('\#.+', line) and not re.match('\s*$', line) and len(line.strip()) != 0 and re.match(self.filter_format, line):
+                    break
+                line_list.append(line)
+        # Write out expression data:
+        with open(self.filters_path, 'w') as fi:
+            for line in line_list:
+                fi.write(line)
+            for group_ in self.groups.items():
+                group_name = group_[0]
+                group = group_[1]
+                for category_ in group.categories.items():
+                    category_name = category_[0]
+                    category = category_[1]
+                    for exp in category.re_expressions:
+                        if group_name != "UNKNOWN":
+                            if category_name == "Other/All":
+                                category_name = ""
+                            fi.write('[%s][%s] "%s"\n' % (group_name, category_name, exp.pattern))
+                    fi.write('\n')
 
     def _dict(self):
         # My own seralization method for the group dict

@@ -18,7 +18,9 @@ import Editor
 import Filters
 import GamelogReader
 import util
-import subprocess, os
+import subprocess
+import os
+import TagConfig
 from functools import partial
 from collections import OrderedDict
 
@@ -26,86 +28,6 @@ from collections import OrderedDict
 
 def dict_to_font(dict_):
     return tkFont.Font(family=dict_["family"], size=dict_["size"], weight=dict_["weight"], slant=dict_["slant"], overstrike=dict_["overstrike"], underline=dict_["underline"])
-
-class config_gui(Tkinter.Toplevel):
-    def __init__(self, parent, filter_):
-        Tkinter.Toplevel.__init__(self, parent)
-        self.parent = parent
-        self.filter = filter_
-        self.pack_propagate(False)
-        self.iconbitmap(Config.settings.icon_path)
-        self.title("Color Configuration (Window %d)" % self.parent.id)
-        self.config(bg="White", height=400, width=380)
-        self.resizable(0, 1)
-        self.init_all()
-        self.color_edit = False
-        self.show_edit = False
-
-
-    def init_all(self):
-        self.init_config()
-
-    def init_config(self):
-        def onFrameConfigure(canvas):
-            '''Reset the scroll region to encompass the inner frame'''
-            canvas.configure(scrollregion=canvas.bbox("all"))
-
-        canvas = Tkinter.Canvas(self, borderwidth=0)
-        frame = Tkinter.Frame(canvas, bg="black", borderwidth=0)
-        vsb = Tkinter.Scrollbar(self, orient="vertical", command=canvas.yview)
-        canvas.configure(yscrollcommand=vsb.set)
-        vsb.pack(side="right", fill="y")
-        canvas.pack(side="left", fill="both", expand=True)
-        canvas.create_window((0, 0), window=frame, anchor="nw")
-        frame.bind("<Configure>", lambda event, canvas=canvas: onFrameConfigure(canvas))
-
-        button_list = []
-        title_bar = True
-        for group_ in self.filter.groups.items():
-            group = group_[1]
-            button_group_list = []
-            for category in group.categories.items():
-                subgroup = category[1]
-                nb = Tkinter.Checkbutton(frame)
-                if subgroup.get_show(self.parent.id):
-                    nb.select()
-                else:
-                    nb.deselect()
-                nb.config(command=partial(self.checkbutton, group.group, subgroup.category), borderwidth=0, padx=0, pady=0, height=2, anchor="e")
-                button_group_list.append((nb, Tkinter.Label(frame, text=subgroup.category, width=30, anchor="w", borderwidth=0, pady=3, height=2)))
-            tb = Tkinter.Button(frame, text=group.group)
-
-            helv36 = tkFont.Font(family='Helvetica', size=14, weight='bold')
-            tb.config(command=partial(self.askcolor, group.group, subgroup.category, tb), background=group.color, borderwidth=6, font=helv36)
-            if title_bar:
-                title_bar = False
-                b_title = Tkinter.Label(frame, text="Visibility", fg="white", background="Black", width=30, anchor="w", borderwidth=0, pady=3, height=2, font=helv36)
-                c_title = Tkinter.Label(frame, borderwidth=0, background="Black", padx=0, pady=0, height=2)
-                g_title = Tkinter.Label(frame, text="Color", fg="white", background="Black", borderwidth=0, anchor="center", font=helv36)
-                button_list.append([g_title, [(c_title, b_title)]])
-            button_list.append([tb, button_group_list])
-
-        i = 1
-        for button_group in button_list:
-            button_group[0].grid(column=0, row=i, rowspan=len(button_group[1]), pady=1, sticky="NSEW")
-            for button_subgroup in button_group[1]:
-                button_subgroup[0].grid(column=1, row=i, sticky="NSEW", pady=2)
-                button_subgroup[1].grid(column=2, row=i, sticky="wNS", pady=2)
-                i += 1
-
-    def checkbutton(self, group, subgroup):
-        state = True
-        if self.filter.get_show(group, subgroup, self.parent.id):
-            state = False
-        self.filter.set_show(group, subgroup, state, self.parent.id)
-        self.show_edit = True
-
-    def askcolor(self, group, subgroup, button):
-        new_color = tkColorChooser.askcolor(parent=self)[1]
-        if new_color is not None:
-            button.config(background=new_color)
-            self.filter.set_color(group, new_color)
-
 
 class announcement_window(Tkinter.Frame):
     def __init__(self, parent, id_):
@@ -148,10 +70,13 @@ class announcement_window(Tkinter.Frame):
 
     def init_pulldown(self):
         self.pulldown = Tkinter.Menu(self, tearoff=0)
-        self.pulldown.add_command(label="Edit Visibility(%d)" % self.id, command=self.edit_colors)
+        bg = "white"
+        if util.platform.win or util.platform.osx:
+             bg = "SystemMenu"
+        self.pulldown.add_command(label="Window %d" % self.id, activebackground=bg, activeforeground="black")
+        self.pulldown.add("separator")
         self.pulldown.add_command(label="Change Font", command=self.edit_font)
         self.pulldown.add_command(label="Toggle Tags", command=self.toggle_tags)
-        self.pulldown.add("separator")
         self.pulldown.add_command(label="Clear Window", command=self.clear_window)
         # self.pulldown.add_command(label="test", command=self.test_todo_remove)
 
@@ -254,20 +179,24 @@ class main_gui(Tkinter.Tk):
         self.gen_tags()
         # self.parallel()
         self.get_announcements(old=Config.settings.load_previous_announcements)
+        self.pack_announcements()
 
     def init_menu(self):
         self.menu = Tkinter.Menu(self, tearoff=0)
-        if util.platform.osx:
-            main_menu = Tkinter.Menu(self.menu, tearoff=0)
-        else:
-            main_menu = self.menu
-        main_menu.add_command(label="Set Directory", command=self.askpath)
-        main_menu.add_separator()
-        main_menu.add_command(label="Edit filters.txt", command=self.edit_filters)
-        main_menu.add_command(label="Open filters.txt", command=self.open_filters)
+
+        options_menu = Tkinter.Menu(self.menu, tearoff=0)
+        options_menu.add_command(label="Filter Configuration", command=self.config_gui)
+        options_menu.add_command(label="Edit filters.txt", command=self.open_filters)
+        options_menu.add_command(label="Reload filters.txt", command=Filters.expressions.reload)
+
+        settings_menu = Tkinter.Menu(self.menu, tearoff=0)
+        settings_menu.add_command(label="Set Directory", command=self.askpath)
+
+        self.menu.add_cascade(label="Settings", menu=settings_menu)
+        self.menu.add_separator()
+        self.menu.add_cascade(label="Options", menu=options_menu)
         # self.menu.add_command(label="Dump CPU info",command = self.dump_info)
-        if util.platform.osx:
-            self.menu.add_cascade(label="Options", menu=main_menu)
+
         self.config(menu=self.menu)
 
     def dump_info(self):
@@ -289,7 +218,6 @@ class main_gui(Tkinter.Tk):
         self.panel.update_idletasks()
         self.panel.sash_place(0, 0, self.gui_data["sash_place"])  # TODO: update to support multiple sashes
 
-
     def gen_tags(self):
         Filters.expressions.reload()
         for announcement_win in self.announcement_windows.items():
@@ -307,6 +235,10 @@ class main_gui(Tkinter.Tk):
 
     def open_filters(self):
         Editor.native_open(Config.settings.filters_path)
+
+    def config_gui(self):
+        TagConfig.MainDialog(self)
+        self.gen_tags()
 
     def askpath(self):
         path = Config.settings.get_gamelog_path()
@@ -332,11 +264,16 @@ class main_gui(Tkinter.Tk):
                 for announcement_win in self.announcement_windows.items():
                     announcement_win[1].insert_ann(ann)
             for announcement_win in self.announcement_windows.items():
-                announcement_win[1].text.pack(side="top", fill="both", expand=True)
                 if announcement_win[1].vsb_pos == 1.0:
                     announcement_win[1].yview("end")
                 announcement_win[1].text.config(state="disabled")
         self.after(1000, self.get_announcements)
+
+    def pack_announcements(self):
+        for announcement_win in self.announcement_windows.items():
+            announcement_win[1].text.pack(side="top", fill="both", expand=True)
+            # Why doesn't this always move to the end when you launch with setting: load_previous_announcements = True  ??
+            announcement_win[1].yview("end")
 
     #===========================================================================
     # def parallel(self): #TODO: remove
