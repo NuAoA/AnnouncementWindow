@@ -254,8 +254,8 @@ class main_gui(Tkinter.Tk):
 
     def lock_window(self):
         if util.platform.win:  # TODO: make this work on osx/linux
-            self.overrideredirect(not self.locked)
             self.locked = not self.locked
+            self.overrideredirect(self.locked)
             self.wm_attributes("-topmost", self.locked)
             tog_ = 'Unlock Window' if self.locked else 'Lock Window'
             self.settings_menu.entryconfig(self.settings_menu.index('end'), label=tog_)
