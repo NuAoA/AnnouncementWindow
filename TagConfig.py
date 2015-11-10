@@ -11,12 +11,17 @@ else:
     raise UserWarning("unknown python version?!")
 
 import Filters
+import Config
 import re
 from functools import partial
 
 LEFT = Tkinter.LEFT
 RIGHT = Tkinter.RIGHT
 CENTER = Tkinter.CENTER
+
+# TODO list:
+# -> Make it possible to add [groups] and [categories] along with regular expressions (currently you can only edit the expressions)
+# -> add some color to the window
 
 RE_MODIFIED = False
 
@@ -61,16 +66,16 @@ class CategoryBar(Tkinter.Frame):
         self.expand_button = Tkinter.Button(self, text="+", command=self.expand, width=1)
         self.expand_button.grid(row=0, column=0, sticky='w')
 
-        frame = Tkinter.Frame(self)
+        frame = Tkinter.Frame(self, background="gray")
 
-        label = Tkinter.Label(frame, text=self.category.category, anchor="w", width=15)
+        label = Tkinter.Label(frame, text=self.category.category, anchor="w", width=15, background='gray')
         label.grid(row=0, column=0, sticky="w")
 
         col_ = 1
         for show_ in self.category.show.items():
             window = show_[0]
             show = show_[1]
-            cbutton = Tkinter.Checkbutton(frame)
+            cbutton = Tkinter.Checkbutton(frame, background="gray")
             if show:
                 cbutton.select()
             cbutton.config(command=partial(self.set_show, window, show, cbutton))
@@ -124,10 +129,11 @@ class GroupBar(Tkinter.Frame):
         self.category_frame = Tkinter.Frame(self)
         title_frame = Tkinter.Frame(self.category_frame)
         frame = Tkinter.Frame(title_frame)
-
-        label = Tkinter.Label(frame, text="Window Visibility:", anchor="e", width=17, padx=2)
-        label.grid(row=0, column=0, sticky="w")
-
+        label_frame = Tkinter.Frame(frame, width=128, height=21, background="gray")
+        label_frame.pack_propagate(0)
+        label = Tkinter.Label(label_frame, text="Window Visibility:", anchor="e", background="gray")
+        label.pack(side=RIGHT)
+        label_frame.grid(row=0, column=0, sticky="w")
         col_ = 1
         # Need to get window count:
         for category_ in self.group.categories.items():
@@ -136,8 +142,11 @@ class GroupBar(Tkinter.Frame):
             for show_ in category.show.items():
                 window = show_[0]
                 show = show_[1]
-                win = Tkinter.Label(frame, text=str(window), width=3, anchor="center", padx=1)  # Could use work, window #'s tend to drift off center
-                win.grid(row=0, column=col_)
+                win_frame = Tkinter.Frame(frame, width=28, height=21)
+                win_frame.pack_propagate(0)
+                win = Tkinter.Label(win_frame, text=str(window).rjust(3), anchor="w", background="gray")
+                win.pack(fill="both", expand=True)
+                win_frame.grid(row=0, column=col_)
                 col_ += 1
             break
         frame.grid(row=0, column=1, sticky="w")
@@ -176,10 +185,12 @@ class GroupBar(Tkinter.Frame):
 class MainDialog(Tkinter.Toplevel):
     def __init__(self, parent, expressions=None):
         Tkinter.Toplevel.__init__(self, parent)
+
         self.parent = parent
         self.expressions = expressions
         # self.expressions.reload()
         self.withdraw()
+        self.iconbitmap(Config.settings.icon_path)
         if parent.winfo_viewable():
             self.transient(parent)
         self.resizable(0, 1)
@@ -279,7 +290,7 @@ if __name__ == '__main__':
         MainDialog(root)
 
     # I need to call these or color&visibility data will not be loaded:
-    for i in range(0, 2):
+    for i in range(0, 8):
         Filters.expressions.add_window(i)
 
     Filters.expressions.reload()

@@ -6,8 +6,30 @@ elif sys.version_info.major == 3:
 
 import pickle
 import os
-
+import re
 import util
+
+
+def locate_gamelog(path=os.getcwd()):
+    # locates gamelog.txt automatically if opened from LNP utility folder
+    # Note: Its pretty sloppy, not sure what is the most reliable method to locate dwarf fortress directory.
+    path_ = path
+    try:
+        head, tail = os.path.split(path_)
+        while tail:
+            if tail == "LNP":
+                # Head is LNP install dir
+                for item in os.listdir(head):
+                    if re.match('[Dd]warf\s*[Ff]ortress\s*\d+\.\d+\.\d+', item):
+                        if os.path.isdir(os.path.join(head, item)):
+                            path_ = os.path.join(head, item)
+                            if os.path.isfile(os.path.join(path_, 'gamelog.txt')):
+                                path_ = os.path.join(path_, 'gamelog.txt')
+                break
+            else:
+                head, tail = os.path.split(head)
+    finally:
+        return path_
 
 class config(object):
     def __init__(self):
@@ -32,7 +54,7 @@ class config(object):
             pickle.dump(data, fi, protocol=0)
 
     def init_var(self):
-        self.gamelogpath = os.getcwd()
+        self.gamelogpath = locate_gamelog()
         self.showgroups = False
         self.load_previous_announcements = False
         self.save_hidden_announcements = False
