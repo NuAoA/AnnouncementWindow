@@ -18,10 +18,8 @@ import Editor
 import Filters
 import GamelogReader
 import util
-import subprocess
 import os
 import TagConfig
-from functools import partial
 from collections import OrderedDict
 
 # import psutil,time
@@ -72,7 +70,7 @@ class announcement_window(Tkinter.Frame):
         self.pulldown = Tkinter.Menu(self, tearoff=0)
         bg = "white"
         if util.platform.win or util.platform.osx:
-             bg = "SystemMenu"
+            bg = "SystemMenu"
         self.pulldown.add_command(label="Window %d" % self.id, activebackground=bg, activeforeground="black")
         self.pulldown.add("separator")
         self.pulldown.add_command(label="Change Font", command=self.edit_font)
@@ -90,21 +88,12 @@ class announcement_window(Tkinter.Frame):
         self.gen_tags()
         self.config(state="disabled")
 
-    def test_todo_remove(self):
-        pass
-
     def edit_font(self):
         tup = tkFontChooser.askChooseFont(self.parent, defaultfont=self.customFont)
         if tup is not None:
             self.customFont = tkFont.Font(font=tup)
             self.parent.gui_data['font_w%s' % self.id] = self.customFont.actual()
             self.config(font=self.customFont)
-
-    def edit_colors(self):
-        if self.config_gui is None:
-            Filters.expressions.reload()
-            self.config_gui = config_gui(self, Filters.expressions)
-            self.config_gui.protocol('WM_DELETE_WINDOW', self.close_config_gui)
 
     def close_config_gui(self):
         self.config_gui.destroy()
@@ -167,7 +156,7 @@ class main_gui(Tkinter.Tk):
         self.customFont = tkFont.Font(family='Lao UI', size=10)
         self.gui_data = Config.settings.load_gui_data()
         self.gamelog = GamelogReader.gamelog()
-        self.gamelog.connect()
+        self.connect()
         self.announcement_windows = OrderedDict([])
         self.cpu_max = {}
         self.py = None
@@ -198,6 +187,11 @@ class main_gui(Tkinter.Tk):
         # self.menu.add_command(label="Dump CPU info",command = self.dump_info)
 
         self.config(menu=self.menu)
+
+    def connect(self):
+        if not self.gamelog.connect():
+            # TODO: add dialog when gamelog is not found
+            pass
 
     def dump_info(self):
         print('CPU-MAX:%f' % max(self.cpu_max["CPU"]))
@@ -250,7 +244,7 @@ class main_gui(Tkinter.Tk):
         if os.path.isfile(new_path):
             Config.settings.set_gamelog_path(new_path)
             Config.settings.save()
-            self.gamelog.connect()
+            self.connect()
 
     def lock_window(self):
         if util.platform.win:  # TODO: make this work on osx/linux
