@@ -25,6 +25,7 @@ def locate_gamelog(path=os.getcwd()):
                             path_ = os.path.join(head, item)
                             if os.path.isfile(os.path.join(path_, 'gamelog.txt')):
                                 path_ = os.path.join(path_, 'gamelog.txt')
+                            break
                 break
             else:
                 head, tail = os.path.split(head)
