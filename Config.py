@@ -65,10 +65,10 @@ class config(object):
         if not os.path.exists(self.filepath):
             self.parser.add_section(self.section)
             self.parser.set(self.section, 'gamelog_path', self.gamelogpath)
-            self.parser.set(self.section, 'save_hidden_announcements', self.save_hidden_announcements)
-            self.parser.set(self.section, 'load_previous_announcements', self.load_previous_announcements)
-            self.parser.set(self.section, 'trim_announcements_0', self.trim_announcements[0])
-            self.parser.set(self.section, 'trim_announcements_1', self.trim_announcements[1])
+            self.parser.set(self.section, 'save_hidden_announcements', str(self.save_hidden_announcements))
+            self.parser.set(self.section, 'load_previous_announcements', str(self.load_previous_announcements))
+            self.parser.set(self.section, 'trim_announcements_0', str(self.trim_announcements[0]))
+            self.parser.set(self.section, 'trim_announcements_1', str(self.trim_announcements[1]))
             self.save()
         else:
             self.parser.read(self.filepath)
