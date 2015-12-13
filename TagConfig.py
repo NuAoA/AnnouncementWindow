@@ -12,6 +12,7 @@ else:
 
 import Filters
 import Config
+import util
 import re
 from functools import partial
 
@@ -195,7 +196,6 @@ class MainDialog(Tkinter.Toplevel):
         self.result = None
 
         self.gen_body()
-        self.menubar()
         if not self.initial_focus:
             self.initial_focus = self
 
@@ -214,11 +214,26 @@ class MainDialog(Tkinter.Toplevel):
     def gen_body(self):
         self.body_frame = Tkinter.Frame(self)
         self.initial_focus = self.body(self.body_frame)
+        if not util.platform.osx:
+            menu = Tkinter.Menu(self)
+            menu.add_command(label="Accept", command=self.ok)
+            menu.add_command(label="Cancel", command=self.cancel)
+            self.config(menu=menu)
+        else:
+            frame = Tkinter.Frame(self.body_frame)
+            ok_button = Tkinter.Button(frame, text="Accept", command=self.ok)  # , background=self.group.color)
+            cancel_button = Tkinter.Button(frame, text="Cancel", command=self.cancel)  # .cancel, background=self.group.color)
+            ok_button.pack(side=LEFT)
+            cancel_button.pack(side=RIGHT)
+            frame.grid(row=0, column=1, sticky='sw')
+            # frame.grid(row=1, column=1, sticky="nsew")
+
         self.body_frame.grid(row=1, column=1, sticky="nsew")
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(1, weight=1)
         self.body_frame.grid_columnconfigure(1, weight=1)
         self.body_frame.grid_rowconfigure(1, weight=1)
+
 
     def body(self, master):
         canvas = Tkinter.Canvas(master, borderwidth=0, width=168)
@@ -248,15 +263,6 @@ class MainDialog(Tkinter.Toplevel):
         self.canvas.config(width=self.canvas_frame.winfo_width(), height=self.winfo_height(),
             scrollregion=self.canvas.bbox('all'))
         self.config(width=self.canvas.winfo_width())
-
-    def menubar(self):
-        menu = Tkinter.Menu(self)
-        menu.add_command(label="Accept", command=self.ok)
-        menu.add_command(label="Cancel", command=self.cancel)
-        self.config(menu=menu)
-
-        # self.bind("<Return>", self.ok)
-        # self.bind("<Escape>", self.cancel)
 
     def ok(self, event=None):
         self.withdraw()
