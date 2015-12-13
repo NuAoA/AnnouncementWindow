@@ -12,6 +12,7 @@ else:
 
 import Filters
 import Config
+import util
 import re
 from functools import partial
 
@@ -54,11 +55,11 @@ class ExpressionBar(Tkinter.Frame):
         return False
 
 class CategoryBar(Tkinter.Frame):
-    def __init__(self, parent, category, canvas, topparent):
+    def __init__(self, parent, category, topparent, dialog):
         Tkinter.Frame.__init__(self, parent)
         self.parent = parent
-        self.canvas = canvas
         self.topparent = topparent
+        self.dialog = dialog
         self.category = category
         self.is_grid = False
         # self.config(background="green")
@@ -102,15 +103,14 @@ class CategoryBar(Tkinter.Frame):
             self.expand_button.config(text="+")
         self.is_grid = not self.is_grid
 
-        self.parent.update_idletasks()
-        self.canvas.config(width=self.parent.winfo_width() + 17)
+        self.dialog.resize()
 
 class GroupBar(Tkinter.Frame):
-    def __init__(self, parent, group, canvas):
+    def __init__(self, parent, group, dialog):
         Tkinter.Frame.__init__(self, parent)
         self.parent = parent
         self.group = group
-        self.canvas = canvas
+        self.dialog = dialog
         self.is_grid = False
 
         self.expand_button = Tkinter.Button(self, text="+", command=self.expand, width=1)
@@ -156,7 +156,7 @@ class GroupBar(Tkinter.Frame):
         for category_ in self.group.categories.items():
             category_name = category_[0]
             category = category_[1]
-            c_ = CategoryBar(self.category_frame, category, canvas, self.parent)
+            c_ = CategoryBar(self.category_frame, category, self.parent, dialog)
             c_.grid(row=row_, column=0, sticky="w")
             row_ += 1
 
@@ -176,9 +176,7 @@ class GroupBar(Tkinter.Frame):
             self.expand_button.config(text="+")
         self.is_grid = not self.is_grid
 
-        # resize window:
-        self.parent.update_idletasks()
-        self.canvas.config(width=self.parent.winfo_width())
+        self.dialog.resize()
 
 
 # Modified tkSimpleDialog
@@ -198,7 +196,6 @@ class MainDialog(Tkinter.Toplevel):
         self.result = None
 
         self.gen_body()
-        self.menubar()
         if not self.initial_focus:
             self.initial_focus = self
 
@@ -214,51 +211,58 @@ class MainDialog(Tkinter.Toplevel):
         self.grab_set()
         self.wait_window(self)
 
-    def resize(self, canvas, event):
-        canvas.config(height=self.winfo_height() - 14)
-
     def gen_body(self):
         self.body_frame = Tkinter.Frame(self)
         self.initial_focus = self.body(self.body_frame)
-        self.body_frame.pack(padx=5, pady=5)
+        if not util.platform.osx:
+            menu = Tkinter.Menu(self)
+            menu.add_command(label="Accept", command=self.ok)
+            menu.add_command(label="Cancel", command=self.cancel)
+            self.config(menu=menu)
+        else:
+            frame = Tkinter.Frame(self.body_frame)
+            ok_button = Tkinter.Button(frame, text="Accept", command=self.ok)  # , background=self.group.color)
+            cancel_button = Tkinter.Button(frame, text="Cancel", command=self.cancel)  # .cancel, background=self.group.color)
+            ok_button.pack(side=LEFT)
+            cancel_button.pack(side=RIGHT)
+            frame.grid(row=0, column=1, sticky='sw')
+            # frame.grid(row=1, column=1, sticky="nsew")
+
+        self.body_frame.grid(row=1, column=1, sticky="nsew")
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(1, weight=1)
+        self.body_frame.grid_columnconfigure(1, weight=1)
+        self.body_frame.grid_rowconfigure(1, weight=1)
+
 
     def body(self, master):
-        def onFrameConfigure(canvas):
-            canvas.configure(scrollregion=canvas.bbox("all"))
-            canvas.config(height=self.winfo_height() - 14)  # why that -14 needs to be there I will never know, but the window increases by that amount every time this is called
-
         canvas = Tkinter.Canvas(master, borderwidth=0, width=168)
+        self.canvas = canvas
         frame = Tkinter.Frame(canvas, borderwidth=0)
+        self.canvas_frame = frame
         vsb = Tkinter.Scrollbar(master, orient="vertical", command=canvas.yview)
 
-        for group_ in Filters.expressions.groups.items():
+        for i, group_ in enumerate(Filters.expressions.groups.items()):
             group_name = group_[0]
             group = group_[1]
-            g = GroupBar(frame, group, canvas)
-            g.pack(fill=Tkinter.X)
+            g = GroupBar(frame, group, self)
+            g.grid(row=i, column=1, sticky="ew")
 
         canvas.configure(yscrollcommand=vsb.set)
-        vsb.pack(side=RIGHT, fill="y")
-        canvas.pack(side=LEFT, fill="both", expand=True)
+        vsb.grid(row=1, column=2, sticky="ns")
+        canvas.grid(row=1, column=1, sticky="nsew")
         canvas.create_window((0, 0), window=frame, anchor="nw")
-        frame.bind("<Configure>", lambda event, canvas=canvas: onFrameConfigure(canvas))
-        frame.update_idletasks()
+        canvas.update_idletasks()
 
         self.minsize(frame.winfo_width(), 300)
         self.maxsize(1080, frame.winfo_height())
+        self.resize()
 
-        canvas.config(width=frame.winfo_width())
-        canvas.config(height=self.winfo_height())
-        self.bind("<Configure>", partial(self.resize, canvas))
-
-    def menubar(self):
-        menu = Tkinter.Menu(self)
-        menu.add_command(label="Accept", command=self.ok)
-        menu.add_command(label="Cancel", command=self.cancel)
-        self.config(menu=menu)
-
-        # self.bind("<Return>", self.ok)
-        # self.bind("<Escape>", self.cancel)
+    def resize(self):
+        self.update_idletasks()
+        self.canvas.config(width=self.canvas_frame.winfo_width(), height=self.winfo_height(),
+            scrollregion=self.canvas.bbox('all'))
+        self.config(width=self.canvas.winfo_width())
 
     def ok(self, event=None):
         self.withdraw()

@@ -1,10 +1,10 @@
 import sys
 
 class platform:
-    win   = (sys.platform == 'win32')
-    osx   = (sys.platform == 'darwin')
-    linux = (sys.platform == 'linux2')
-    unix  = (osx or linux)
+    win = (sys.platform == 'win32')
+    osx = (sys.platform == 'darwin')
+    linux = (sys.platform == 'linux2' or sys.platform == 'linux')
+    unix = (osx or linux)
 
 class mouse_buttons:
     left = '<Button-1>'
