@@ -8,7 +8,7 @@ import json
 class subgroup(object):
     def __init__(self, category, re_expression, w, show):
         self.category = category
-        self.re_expressions = [re.compile(re_expression)]
+        self.re_expressions = [re.compile(re_expression, re.IGNORECASE)]
         self.show = OrderedDict([])
         self.show[w] = show
 
@@ -32,7 +32,7 @@ class subgroup(object):
         self.show[w] = self.show[0]
 
     def add_expression(self, re_expression):
-        self.re_expressions.append(re.compile(re_expression))
+        self.re_expressions.append(re.compile(re_expression, re.IGNORECASE))
 
     def check_expression(self, string):
         for expression in self.re_expressions:
