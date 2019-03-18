@@ -1,0 +1,28 @@
+#########################################################################
+# #######################################################################
+# # This is the colors grouping configuration			      # #
+# # To add your own colors you need to create a line :		      # #
+# # [group][color] "list,of,words,for,that,color"		      # #
+# # 								      # #
+# # The group need to be the same as the filter.txt, here's the list: # #
+# # 								      # #
+# # [battle_minor] [battle] [JobSuspension] [Production] [misc]	      # #
+# # [masterpiece] [beekeeping] [deaths] [dfhack] [fishing]	      # #
+# # [interactions] [emotion] [system] [trading] [weather]	      # #
+# # [seasons] [migrants] [profession] [social] [animals]	      # #
+# # [named_item] [moods] [mining] [mandates] [intruders]	      # #
+# # 								      # #
+# # For general highlighting you must use the [General] group	      # #
+# #######################################################################
+#########################################################################
+
+[General][red] "cancels,feel,shit"
+
+[emotion][blue] "enraptured,pleasure,admiration,fondness,sympathy,affection,adoration,love,tenderness,passionate,aroused,caring,proud,gratitude,repentant,empathy"
+[emotion][green] "euphoric,enjoyment,happy,gaiety,amused,blissful,bliss,jovial,delighted,content,satisfied,satisfying,elated,relieved,free,expectant,triumph,hope,optimistic"
+[emotion][dark blue] "exhilarated,interested,interesting,astonishe,awe,eager"
+[emotion][gray] "accepting,ambivalent"
+[emotion][purple] "suspicious"
+[emotion][lime] "annoyed,grouchy,exasperated,irritated,dislike,bitter,resentful,contemptuous,lonely,uneasy,worried,restless,guilty,regretful,self-pity,frustrated,bored,embarrassed,disillutioned,dejected,glum,indignant,insulted,confused,agitated"
+[emotion][yellow] "shaken,hopeless,empty,disgusted,mortified,distressed,humiliated,ashamed,frightened,sad,grieved,anguish,shocked,panicked"
+[emotion][red] "angry,afraid,terrified,horrified,vengeful,ferocity,outraged,loathing"
