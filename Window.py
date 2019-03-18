@@ -12,10 +12,12 @@ elif  sys.version_info.major == 3:
 else:
     raise UserWarning("unknown python version?!")
 
+import re
 import tkFontChooser
 import Config
 import Editor
 import Filters
+import WordColor
 import GamelogReader
 import util
 import os
@@ -110,8 +112,17 @@ class announcement_window(Tkinter.Frame):
 
 
     def gen_tags(self, clear_index_dict=False):
+        """Generate the tkinter tags for coloring
+        """
+        
         self.vsb_pos = (self.vsb.get()[1])
+        colordict=Config.settings.word_color_dict
+        for color in colordict:
+            """Word Coloring"""
+            self.tag_config(color, foreground=colordict[color])
+
         for group_ in Filters.expressions.groups.items():
+            """Group Coloring"""
             group = group_[1]
             for category_ in group.categories.items():
                 category = category_[1]
@@ -125,12 +136,23 @@ class announcement_window(Tkinter.Frame):
                     self.index_dict[tag_name] = 0
         if self.vsb_pos == 1.0:
             self.yview("end")
-
+            
     def insert_ann(self, ann):
         def insert():
-            tag_name = "%s.%s" % (ann.get_group(), ann.get_category())
-            self.insert("end", "[%s][%s] " % (ann.get_group(), ann.get_category()), '%s.elide' % tag_name)
-            self.insert("end", "%s" % (ann.get_text()), tag_name)
+            anngroup=ann.get_group()
+            anncat=ann.get_category()
+            splitword="("+'|'.join(WordColor.wd.get_all_group_words(anngroup))+")"
+            tag_name = "%s.%s" % (anngroup, anncat)
+            self.insert("end", "[%s][%s] " % (anngroup, anncat), '%s.elide' % tag_name)
+
+            for splitxt in re.split(splitword, ann.get_text()):
+                hlwordcolor=WordColor.wd.get_colorname(splitxt,anngroup)
+                if hlwordcolor:
+                    self.insert("end", "%s" % splitxt, hlwordcolor)
+                else:
+                    self.insert("end", "%s" % splitxt, tag_name)
+
+            self.insert("end","\n")
             self.trim_announcements(tag_name)
 
         if ann.get_show(self.id):
