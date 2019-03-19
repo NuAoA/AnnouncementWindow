@@ -1,20 +1,24 @@
-#########################################################################
-# #######################################################################
-# # This is the colors grouping configuration			      # #
-# # To add your own colors you need to create a line :		      # #
-# # [group][color] "list,of,words,for,that,color"		      # #
-# # 								      # #
-# # The group need to be the same as the filter.txt, here's the list: # #
-# # 								      # #
-# # [battle_minor] [battle] [JobSuspension] [Production] [misc]	      # #
-# # [masterpiece] [beekeeping] [deaths] [dfhack] [fishing]	      # #
-# # [interactions] [emotion] [system] [trading] [weather]	      # #
-# # [seasons] [migrants] [profession] [social] [animals]	      # #
-# # [named_item] [moods] [mining] [mandates] [intruders]	      # #
-# # 								      # #
-# # For general highlighting you must use the [General] group	      # #
-# #######################################################################
-#########################################################################
+
+#####################################################################
+# This is the colors configuration file         		    #
+# To add your own colors you need to create a line :		    #
+# 								    #
+# [group][color] "list,of,words,for,that,color"			    #
+# It's case-sensitive, <color> need to be in lowercase		    #
+# 								    #
+# You can customize your own colors in the Settings.cfg file	    #
+# 								    #
+# The group need to be the same as the filter.txt, here's the list: #
+# 								    #
+# [battle_minor] [battle] [JobSuspension] [Production] [misc]	    #
+# [masterpiece] [beekeeping] [deaths] [dfhack] [fishing]	    #
+# [interactions] [emotion] [system] [trading] [weather]		    #
+# [seasons] [migrants] [profession] [social] [animals]		    #
+# [named_item] [moods] [mining] [mandates] [intruders]		    #
+# 								    #
+# For general highlighting you must use the [General] group	    #
+#####################################################################
+
 
 ###########
 # General #
@@ -24,10 +28,10 @@
 [General][silver] "Miner"
 [General][yellow] "Woodworker,Carpenter,Bowyer,Woodcutter"
 [General][white] "Stoneworker,Engraver,Mason"
-[General][green] "Ranger,Animal Caretaker,Animal trainer,Hunter,Trapper,AniMal Dissector"
+[General][green] "Ranger,Animal Caretaker,Animal Trainer,Hunter,Trapper,Animal Dissector"
 [General][gray] "Metalsmith,Furnace Operator,Weaponsmith,Armorer,Blacksmith,Metalcrafter"
 [General][lime] "Jeweler,Gem Cutter,Gem Setter"
-[General][blue] "Craftsman,Woodcrafter,Stonecrafter,Leatherworker,Bone carver,Weaver,Clothier,Glassmaker,Potter,Glazer,Wax Worker,Strand Extractor"
+[General][blue] "Craftsman,Woodcrafter,Stonecrafter,Leatherworker,Bone Carver,Weaver,Clothier,Glassmaker,Potter,Glazer,Wax Worker,Strand Extractor"
 [General][navy] "Fishery Worker,Fisherman,Fish Dissector,Fish Cleaner"
 [General][olive] "Farmer,Cheese Maker,Milker,Cook,Thresher,Miller,Butcher,Tanner,Dyer,Planter,Herbalist,Brewer,Soap Maker,Potash Maker,Lye Maker,Wood Burner,Shearer,Spinner,Presser,Beekeeper"
 [General][red] "Engineer,Mechanic,Siege Engineer,Siege Operator,Pump Operator"
@@ -66,7 +70,7 @@
 [General][purple] "Messenger"
 
 #Noble
-[General][yellow] "queen,king,mayor,baronness,baron,chief medical dwarf,outpost liaison"
+[General][yellow] "queen,king,mayor,baronness,baron,chief medical dwarf,outpost liaison,manager"
 
 ###########
 # Emotion #

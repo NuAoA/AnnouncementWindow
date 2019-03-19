@@ -1,6 +1,6 @@
 Announcement Window+ Readme
 Author: NuAoA
-Version: 1.1
+Version: 1.2
 Github: https://github.com/NuAoA/AnnouncementWindow
 
 Announcement Window+ is a python application that interfaces with Dwarf Fortress to print 
@@ -13,6 +13,8 @@ feed of your combat reports (```r```). No more pausing the game!
 You can also configure the font/size/color of the announcements, and with a basic understanding
 of regular expressions (https://docs.python.org/2/library/re.html) you can even create your own
 custom filters!
+
+Finally you can customize your own words to be highlighted with your own colors!
 
 Configuration:
 **Install**
@@ -50,7 +52,7 @@ window, and is used to set if the announcement should be shown in the window or 
 Here's a typical example:
 
 Say you don't like how the announcements for Thief's showing up share the same color with as
-Snatchers. Just edit *Filters.txt* and change the group for that regular expression from
+Snatchers. Just edit *filters.txt* and change the group for that regular expression from
 ```[intruders]``` to something new.
 specifically, you could change the line
 
@@ -58,9 +60,33 @@ specifically, you could change the line
 
 to 
 
-	[intruders_Theif][intruders] "Thief!  Protect the hoard from skulking filth!"
+	[intruders_Thief][intruders] "Thief!  Protect the hoard from skulking filth!"
 
 Now you can now edit the color for the new group ```[intruders_Thief]```.
+
+**Custom Word Coloring**
+
+You can customize the list of words to be highlighted with a defined color with similare format
+in the wordcolor.txt
+Each tag follows the format:
+
+[group][color] "list,of,words"
+
+Where ```[group]``` is the same tag as the filters.txt format. The ```[color]``` is the color
+defined in the *Settings.cfg* [Colors] section. The words need to be listed between double quotes
+and separated with coma.
+
+For example, to set all "cancels" and "mandate" words to be highlighted in red, you can add
+a line in the wordcolor.txt :
+```
+[General][red] "cancels,mandate"
+```
+
+You can specify the same word with different colors for different group like so:
+```
+[battle][green] "Urist McColored"
+[masterpiece][olive] "Urist McColored"
+```
 
 **Settings**
 
@@ -108,3 +134,7 @@ display a single announcement from each category. The window would then only dis
 recent event, ie. *"A (.+) caravan from (.+) has arrived"* would be replaced by *"Merchants have
 arrived and are unloading their goods"* once they reach your trade depot or "It has started
 Raining" would be replaced by "The weather has cleared" when the rain stops.   
+
+* ```Colors```
+
+Simply add under the section [Colors] custom name and hex value of your choice. 

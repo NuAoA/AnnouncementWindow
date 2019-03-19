@@ -12,7 +12,7 @@ This program was written for python 2.7.10, but now has python 3 support! It sho
 
 ### **Install**
 
-If you are running windows, download the latest release (https://github.com/NuAoA/AnnouncementWindow/releases) and unzip the folder anywhere on your computer. Click *AnnouncementWindow.exe* to launch.
+If you are running windows, download the latest release (https://github.com/BrachystochroneSD/AnnouncementWindow/releases) and unzip the folder anywhere on your computer. Click *AnnouncementWindow.exe* to launch.
 
 If you are not on windows, or just want to run the code directly, you will need to have python installed on your computer. Download the repository. The program is launched by running the script *run.py*.
 
@@ -46,6 +46,29 @@ to
 	[intruders_Theif][intruders] "Thief!  Protect the hoard from skulking filth!"
 
 Now you can now edit the color for the new group ```[intruders_Thief]```.
+**Custom Word Coloring**
+
+You can customize the list of words to be highlighted with a defined color with similare format
+in the wordcolor.txt
+Each tag follows the format:
+
+[group][color] "list,of,words"
+
+Where ```[group]``` is the same tag as the filters.txt format. The ```[color]``` is the color
+defined in the *Settings.cfg* [Colors] section. The words need to be listed between double quotes
+and separated with coma.
+
+For example, to set all "cancels" and "mandate" words to be highlighted in red, you can add
+a line in the wordcolor.txt :
+```
+[General][red] "cancels,mandate"
+```
+
+You can specify the same word with different colors for different group like so:
+```
+[battle][green] "Urist McColored"
+[masterpiece][olive] "Urist McColored"
+```
 
 ### **Settings**
 
@@ -67,4 +90,9 @@ If you set this to ```True``` it tell the program to save all announcements, eve
 
 This option saves system memory at the cost of increased CPU power. If it is set to any integer value above zero, it will limit how many of each announcement type (category) are saved in memory. For example, a value of 2000 would store only up to 2000 of each type of announcement (ie 2000 ```[battle_minor][hitevents_miss]``` along with 2000 ```[battle_minor][block_dodge]```, which are typical combat training spam). Once there are 2000 of that type of announcement, the oldest announcement will be thrown out to free up some space. If it is set to zero, all announcements will be kept until you clear the window(s).
 
-Another use of this option is to set the value to 1 for one of the windows, making it only display a single announcement from each category. The window would then only display the most recent event, ie. *"A (.+) caravan from (.+) has arrived"* would be replaced by *"Merchants have arrived and are unloading their goods"* once they reach your trade depot or "It has started Raining" would be replaced by "The weather has cleared" when the rain stops.   
+Another use of this option is to set the value to 1 for one of the windows, making it only display a single announcement from each category. The window would then only display the most recent event, ie. *"A (.+) caravan from (.+) has arrived"* would be replaced by *"Merchants have arrived and are unloading their goods"* once they reach your trade depot or "It has started Raining" would be replaced by "The weather has cleared" when the rain stops.
+
+* ```Colors```
+
+Simply add under the section [Colors] custom name and hex value of your choice. 
+You can modify the hex value of the default colors
