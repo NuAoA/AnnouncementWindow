@@ -144,7 +144,6 @@ class announcement_window(Tkinter.Frame):
             splitword="("+'|'.join(WordColor.wd.get_all_group_words(anngroup))+")"
             tag_name = "%s.%s" % (anngroup, anncat)
             self.insert("end", "[%s][%s] " % (anngroup, anncat), '%s.elide' % tag_name)
-
             for splitxt in re.split(splitword, ann.get_text()):
                 hlwordcolor=WordColor.wd.get_colorname(splitxt,anngroup)
                 if hlwordcolor:
@@ -152,7 +151,6 @@ class announcement_window(Tkinter.Frame):
                 else:
                     self.insert("end", "%s" % splitxt, tag_name)
 
-            self.insert("end","\n")
             self.trim_announcements(tag_name)
 
         if ann.get_show(self.id):

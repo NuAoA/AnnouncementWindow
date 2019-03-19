@@ -16,13 +16,67 @@
 # #######################################################################
 #########################################################################
 
-[General][red] "cancels,feel,shit"
+###########
+# General #
+###########
 
-[emotion][blue] "enraptured,pleasure,admiration,fondness,sympathy,affection,adoration,love,tenderness,passionate,aroused,caring,proud,gratitude,repentant,empathy"
-[emotion][green] "euphoric,enjoyment,happy,gaiety,amused,blissful,bliss,jovial,delighted,content,satisfied,satisfying,elated,relieved,free,expectant,triumph,hope,optimistic"
-[emotion][dark blue] "exhilarated,interested,interesting,astonishe,awe,eager"
-[emotion][gray] "accepting,ambivalent"
+#Job
+[General][silver] "Miner"
+[General][yellow] "Woodworker,Carpenter,Bowyer,Woodcutter"
+[General][white] "Stoneworker,Engraver,Mason"
+[General][green] "Ranger,Animal Caretaker,Animal trainer,Hunter,Trapper,AniMal Dissector"
+[General][gray] "Metalsmith,Furnace Operator,Weaponsmith,Armorer,Blacksmith,Metalcrafter"
+[General][lime] "Jeweler,Gem Cutter,Gem Setter"
+[General][blue] "Craftsman,Woodcrafter,Stonecrafter,Leatherworker,Bone carver,Weaver,Clothier,Glassmaker,Potter,Glazer,Wax Worker,Strand Extractor"
+[General][navy] "Fishery Worker,Fisherman,Fish Dissector,Fish Cleaner"
+[General][olive] "Farmer,Cheese Maker,Milker,Cook,Thresher,Miller,Butcher,Tanner,Dyer,Planter,Herbalist,Brewer,Soap Maker,Potash Maker,Lye Maker,Wood Burner,Shearer,Spinner,Presser,Beekeeper"
+[General][red] "Engineer,Mechanic,Siege Engineer,Siege Operator,Pump Operator"
+[General][purple] "Clerk,Administrator,Trader,Architect,Alchemist,Doctor,Diagnoser,Doctor,Suturer,Surgeon"
+[General][gray] "Merchant"
+[General][purple] "Hammerman"
+[General][fuchsia] "Hammer Lord"
+[General][olive] "Spearman"
+[General][yellow] "Spearmaster"
+[General][green] "Crossbowman"
+[General][lime] "Elite Crossbowman"
+[General][silver] "Wrestler,Miner"
+[General][white] "Elite Wrestler"
+[General][navy] "Axeman"
+[General][blue] "Axe Lord"
+[General][teal] "Swordsman"
+[General][aqua] "Swordmaster"
+[General][maroon] "Maceman"
+[General][red] "Mace Lord"
+[General][olive] "Pikeman"
+[General][yellow] "Pikemaster"
+[General][green] "Bowman"
+[General][lime] "Elite Bowman"
+[General][gray] "Blowgunner,Master Blowgunner,Lasher,Master Lasher,Recruit"
+[General][silver] "Hunting Animal"
+[General][gray] "War Animal,Master Thief,Thief"
+[General][teal] "Peasant"
+[General][maroon] "Dwarven Child,Child,Baby"
+[General][olive] "Drunk,Monster Slayer,Scout,Beast Hunter,Snatcher,Mercenary,Gelder,Performer"
+[General][purple] "Poet,Bard,Dancer,Sage,Scholar,Philosopher,Mathematician,Historian,Astronomer,Naturalist,Chemist,Geographer,Scribe"
+[General][blue] "Papermaker,Bookbinder"
+[General][purple] "Tavern Keeper"
+[General][gray] "Criminal"
+[General][silver] "Peddler"
+[General][white] "Prophet,Pilgrim,Monk"
+[General][purple] "Messenger"
+
+#Noble
+[General][yellow] "queen,king,mayor,baronness,baron,chief medical dwarf,outpost liaison"
+
+###########
+# Emotion #
+###########
+[emotion][aqua] "enraptured,pleasure,pleases me,admiration,fondness,sympathy,sympathetic,affection,adoration,love,tenderness,passionate,aroused,caring,care so much,proud,gratitude,repentant,empathy,wonder,wondrous,spiritually moved"
+[emotion][green] "euphoric,enjoyment,enjoyed,happy,gaiety,amused,blissful,could be bliss,jovial,delighted,some delight,content,satisfied,satisfying,elated,relieved,free,expectant,triumph,hope,optimistic,pretty good,feeling great"
+[emotion][navy] "exhilarated,interested,interesting,astonished,awe,eager"
+[emotion][gray] "accepting,ambivalent,no pleasure,do not see the bliss in this,not interested,not enjoying,not uneasy,not satisfying"
 [emotion][purple] "suspicious"
-[emotion][lime] "annoyed,grouchy,exasperated,irritated,dislike,bitter,resentful,contemptuous,lonely,uneasy,worried,restless,guilty,regretful,self-pity,frustrated,bored,embarrassed,disillutioned,dejected,glum,indignant,insulted,confused,agitated"
-[emotion][yellow] "shaken,hopeless,empty,disgusted,mortified,distressed,humiliated,ashamed,frightened,sad,grieved,anguish,shocked,panicked"
+[emotion][olive] "annoyed,grouchy,exasperated,irritated,dislike,bitter,resentful,contemptuous,lonely,very uneasy,uneasy,worried,restless,guilty,regretful,self-pity,frustrated,bored,embarrassed,embarrassing,disillutioned,dejected,very grouchy,very dejected,glum,indignant,insulted,confused,agitated"
+[emotion][yellow] "shaken,no hope,hopeless,empty,disgusted,mortified,distressed,humiliated,ashamed,frightened,sad,grieved,anguish,shocked,panicked"
 [emotion][red] "angry,afraid,terrified,horrified,vengeful,ferocity,outraged,loathing"
+

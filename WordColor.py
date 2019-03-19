@@ -89,10 +89,9 @@ class color_grouping(object):
             cN=self.groups[group].find_word(word)
             if cN:
                 return cN
-        else:
-            cND=self.groups['General'].find_word(word)
-            if cND:
-                return cND
+        cND=self.groups['General'].find_word(word)
+        if cND:
+            return cND
 
     def get_all_group_words(self,group):
         """ Return all the words of a group and 
