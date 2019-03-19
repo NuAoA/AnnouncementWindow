@@ -46,7 +46,7 @@ to
 	[intruders_Theif][intruders] "Thief!  Protect the hoard from skulking filth!"
 
 Now you can now edit the color for the new group ```[intruders_Thief]```.
-**Custom Word Coloring**
+### **Custom Word Coloring**
 
 You can customize the list of words to be highlighted with a defined color with similare format
 in the wordcolor.txt
