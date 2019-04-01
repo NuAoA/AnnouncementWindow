@@ -46,20 +46,21 @@ to
 	[intruders_Theif][intruders] "Thief!  Protect the hoard from skulking filth!"
 
 Now you can now edit the color for the new group ```[intruders_Thief]```.
+
 ### **Custom Word Coloring**
 
 You can customize the list of words to be highlighted with a defined color with similare format
 in the wordcolor.txt
 Each tag follows the format:
 
-[group][color] "list,of,words"
+[group][colortag] "list,of,words"
 
-Where ```[group]``` is the same tag as the filters.txt format. The ```[color]``` is the color
-defined in the *Settings.cfg* [Colors] section. The words need to be listed between double quotes
+Where ```[group]``` is the same tag as the filters.txt format. The ```[colortag]``` is
+defined in the *Settings.cfg* [Colors] section (see Settings/Colors section below). The words need to be listed between double quotes
 and separated with coma.
 
 For example, to set all "cancels" and "mandate" words to be highlighted in red, you can add
-a line in the wordcolor.txt :
+a line in the wordcolor.txt:
 ```
 [General][red] "cancels,mandate"
 ```
@@ -94,5 +95,10 @@ Another use of this option is to set the value to 1 for one of the windows, maki
 
 * ```Colors```
 
-Simply add under the section [Colors] custom name and hex value of your choice. 
-You can modify the hex value of the default colors
+Simply add your custom "ColorTag" under the section [Colors] with a custom name and the hex value of your choice.
+Each "colortag" can take two arguments: a *foreground* color and a *background* color (#RGB or #RRGGBB).
+The format is:
+```tagname = #foreground #background```
+If there's no background color defined, the ```default_background``` color is used.
+The ```default_background``` only take one argument and set the default background used for non-specified background colortag.
+You can modify the hex value of the default colors and assign new words in the wordcolor.txt file.

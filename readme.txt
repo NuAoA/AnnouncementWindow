@@ -19,7 +19,7 @@ Finally you can customize your own words to be highlighted with your own colors!
 Configuration:
 **Install**
 
-If you are running windows, download the latest release (https://github.com/NuAoA/AnnouncementWindow/releases) and unzip the folder anywhere on your computer. Click *AnnouncementWindow.exe* to launch.
+If you are running windows, download the latest release (https://github.com/BrachystochroneSD/AnnouncementWindow/releases) and unzip the folder anywhere on your computer. Click *AnnouncementWindow.exe* to launch.
 
 If you are not on windows, or just want to run the code directly, you will need to have python installed on your computer. Download the repository. The program is launched by running the script *run.py*.
 
@@ -137,4 +137,10 @@ Raining" would be replaced by "The weather has cleared" when the rain stops.
 
 * ```Colors```
 
-Simply add under the section [Colors] custom name and hex value of your choice. 
+Simply add your custom "ColorTag" under the section [Colors] with a custom name and the hex value of your choice.
+Each "colortag" can take two arguments: a *foreground* color and a *background* color (#RGB or #RRGGBB).
+The format is:
+```tagname = #foreground #background```
+If there's no background color defined, the ```default_background``` color is used.
+The ```default_background``` only take one argument and set the default background used for non-specified background colortag.
+You can modify the hex value of the default colors and assign new words in the wordcolor.txt file.

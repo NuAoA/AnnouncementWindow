@@ -52,7 +52,6 @@ class announcement_window(Tkinter.Frame):
         self.text.pack(side="left", fill="both", expand=True)
         self.text.bind(util.mouse_buttons.right, self.popup)
 
-
         # link methods
         self.insert = self.text.insert
         self.delete = self.text.delete
@@ -67,7 +66,6 @@ class announcement_window(Tkinter.Frame):
         self.config = self.text.config
         self.yview = self.text.yview
 
-
     def init_pulldown(self):
         self.pulldown = Tkinter.Menu(self, tearoff=0)
         bg = "white"
@@ -78,7 +76,6 @@ class announcement_window(Tkinter.Frame):
         self.pulldown.add_command(label="Change Font", command=self.edit_font)
         self.pulldown.add_command(label="Toggle Tags", command=self.toggle_tags)
         self.pulldown.add_command(label="Clear Window", command=self.clear_window)
-        # self.pulldown.add_command(label="test", command=self.test_todo_remove)
 
     def popup(self, event):
         if self.focus_get() is not None:
@@ -110,16 +107,14 @@ class announcement_window(Tkinter.Frame):
         self.gen_tags(clear_index_dict=True)
         self.config(state="disabled")
 
-
     def gen_tags(self, clear_index_dict=False):
         """Generate the tkinter tags for coloring
-        """
-        
+        """        
         self.vsb_pos = (self.vsb.get()[1])
         colordict=Config.settings.word_color_dict
         for color in colordict:
             """Word Coloring"""
-            self.tag_config(color, foreground=colordict[color])
+            self.tag_config(color, foreground=colordict[color][0], background=colordict[color][1])
 
         for group_ in Filters.expressions.groups.items():
             """Group Coloring"""
@@ -136,21 +131,22 @@ class announcement_window(Tkinter.Frame):
                     self.index_dict[tag_name] = 0
         if self.vsb_pos == 1.0:
             self.yview("end")
-            
+
     def insert_ann(self, ann):
         def insert():
             anngroup=ann.get_group()
             anncat=ann.get_category()
-            splitword="("+'|'.join(WordColor.wd.get_all_group_words(anngroup))+")"
             tag_name = "%s.%s" % (anngroup, anncat)
             self.insert("end", "[%s][%s] " % (anngroup, anncat), '%s.elide' % tag_name)
-            for splitxt in re.split(splitword, ann.get_text()):
-                hlwordcolor=WordColor.wd.get_colorname(splitxt,anngroup)
+            regex=r"(\b"+'\\b|\\b'.join(WordColor.wd.get_all_group_words(anngroup))+"\\b)"
+            tokenized = re.split(regex, ann.get_text())
+            for token in tokenized:
+                #TODO try to insert with two tags : tag_name and hlwordcolor
+                hlwordcolor=WordColor.wd.get_colorname(token,anngroup)
                 if hlwordcolor:
-                    self.insert("end", "%s" % splitxt, hlwordcolor)
+                    self.insert("end", "%s" % token, hlwordcolor)
                 else:
-                    self.insert("end", "%s" % splitxt, tag_name)
-
+                    self.insert("end", "%s" % token, tag_name)
             self.trim_announcements(tag_name)
 
         if ann.get_show(self.id):
