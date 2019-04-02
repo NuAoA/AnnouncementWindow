@@ -112,10 +112,6 @@ class announcement_window(Tkinter.Frame):
         """        
         self.vsb_pos = (self.vsb.get()[1])
         colordict=Config.settings.word_color_dict
-        for color in colordict:
-            """Word Coloring"""
-            self.tag_config(color, foreground=colordict[color][0], background=colordict[color][1])
-
         for group_ in Filters.expressions.groups.items():
             """Group Coloring"""
             group = group_[1]
@@ -129,6 +125,9 @@ class announcement_window(Tkinter.Frame):
                     self.index_dict[tag_name] = 0
                 elif not (tag_name in self.index_dict):
                     self.index_dict[tag_name] = 0
+        for color in colordict:
+            """Word Coloring"""
+            self.tag_config(color, foreground=colordict[color][0], background=colordict[color][1])
         if self.vsb_pos == 1.0:
             self.yview("end")
 
@@ -141,12 +140,12 @@ class announcement_window(Tkinter.Frame):
             regex=r"(\b"+'\\b|\\b'.join(WordColor.wd.get_all_group_words(anngroup))+"\\b)"
             tokenized = re.split(regex, ann.get_text())
             for token in tokenized:
-                #TODO try to insert with two tags : tag_name and hlwordcolor
                 hlwordcolor=WordColor.wd.get_colorname(token,anngroup)
+                self.insert("end", "%s" % token, tag_name)
                 if hlwordcolor:
-                    self.insert("end", "%s" % token, hlwordcolor)
-                else:
-                    self.insert("end", "%s" % token, tag_name)
+                    start="end-"+str(1+len(token))+"c"
+                    end="end-1c"
+                    self.tag_add(hlwordcolor,start,end)
             self.trim_announcements(tag_name)
 
         if ann.get_show(self.id):
