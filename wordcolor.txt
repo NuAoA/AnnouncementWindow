@@ -76,7 +76,7 @@
 # Emotion #
 ###########
 [emotion][aqua] "enraptured,pleasure,very pleased,How pleasurable,pleases me,admirable,admiration,very fond,fondness,sympathy,sympathetic,affection,adoration,love,tenderness,passionate,aroused,caring,care so much,really care,proud,gratitude,very grateful,repentant,empathy,wonder,wondrous,spiritually moved"
-[emotion][green] "feel so good,really exciting,exciting,euphoric,joyable,joyous,enjoyment,enjoyed,happy,gaiety,amused,amusing,blissful,could be bliss,jovial,delighted,some delight,delightful,content,contented,satisfied,satisfying,elated,relieved,free,expectant,triumph,hope,optimistic,pretty good,feeling great"
+[emotion][green] "feel so good,excited,exciting,euphoric,joyable,joyous,enjoyment,enjoyed,happy,gaiety,amused,amusing,blissful,could be bliss,jovial,delighted,some delight,delightful,content,contented,satisfied,satisfying,elated,relieved,free,expectant,triumph,hope,optimistic,pretty good,feeling great"
 [emotion][navy] "exhilarated,exhilarating,interested,amazing,interesting,astonished,awe,eager"
 [emotion][gray] "accepting,ambivalent,no pleasure,not filled with delight,do not see the bliss in this,not enjoying,not uneasy,not resent,doesn't excite me,accept this,not much to admire here"
 [emotion][purple] "suspicious"
