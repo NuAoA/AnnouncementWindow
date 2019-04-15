@@ -191,6 +191,7 @@ class main_gui(Tkinter.Tk):
         options_menu = Tkinter.Menu(self.menu, tearoff=0)
         options_menu.add_command(label="Filter Configuration", command=self.config_gui)
         options_menu.add_command(label="Edit filters.txt", command=self.open_filters)
+        options_menu.add_command(label="Reload wordcolor.txt", command=WordColor.wd.reload)
         options_menu.add_command(label="Reload filters.txt", command=Filters.expressions.reload)
 
         self.settings_menu = Tkinter.Menu(self.menu, tearoff=0)
