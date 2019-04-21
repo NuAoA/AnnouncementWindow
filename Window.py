@@ -113,7 +113,7 @@ class announcement_window(Tkinter.Frame):
         self.vsb_pos = (self.vsb.get()[1])
         colordict=Config.settings.word_color_dict
         for group_ in Filters.expressions.groups.items():
-            """Group Coloring"""
+            # Group Coloring
             group = group_[1]
             for category_ in group.categories.items():
                 category = category_[1]
@@ -126,7 +126,7 @@ class announcement_window(Tkinter.Frame):
                 elif not (tag_name in self.index_dict):
                     self.index_dict[tag_name] = 0
         for color in colordict:
-            """Word Coloring"""
+            # Word Coloring
             self.tag_config(color, foreground=colordict[color][0], background=colordict[color][1])
         if self.vsb_pos == 1.0:
             self.yview("end")
@@ -193,6 +193,7 @@ class main_gui(Tkinter.Tk):
         options_menu.add_command(label="Edit filters.txt", command=self.open_filters)
         options_menu.add_command(label="Reload wordcolor.txt", command=WordColor.wd.reload)
         options_menu.add_command(label="Reload filters.txt", command=Filters.expressions.reload)
+        options_menu.add_command(label="Reload Settings", command=self.reload_settings)
 
         self.settings_menu = Tkinter.Menu(self.menu, tearoff=0)
         self.settings_menu.add_command(label="Set Directory", command=self.askpath)
@@ -239,6 +240,10 @@ class main_gui(Tkinter.Tk):
         self.gui_data["sash_place"] = self.panel.sash_coord(0)[1]
         Config.settings.save_gui_data(self.gui_data)
         self.destroy()
+
+    def reload_settings(self):
+        Config.settings.load()
+        self.gen_tags()
 
     def edit_filters(self):
         Editor.TextEditor(Config.settings.filters_path)
