@@ -34,7 +34,7 @@ def locate_gamelog(path=os.getcwd()):
 
 class config(object):
     def __init__(self):
-        self.parser = ConfigParser.ConfigParser(allow_no_value=True)
+        self.parser = ConfigParser.ConfigParser()
         self.filepath = "Settings.cfg"
         self.filters_path = "filters.txt"
         self.wordcolor_path = "wordcolor.txt"
@@ -72,9 +72,6 @@ class config(object):
             self.parser.set("Settings", 'trim_announcements_0', str(self.trim_announcements[0]))
             self.parser.set("Settings", 'trim_announcements_1', str(self.trim_announcements[1]))
             self.parser.add_section("Colors")
-            self.parser.set("Colors", "; Input Format :")
-            self.parser.set("Colors", "; tag_name = #fg_color #bg_color")
-            self.parser.set("Colors", "; (if no bg, get default_background color)")
             self.parser.set("Colors", 'default_background', str(self.default_bg))
             for color in self.word_color_dict:
                 self.parser.set("Colors",color,self.word_color_dict[color][0])
