@@ -1,0 +1,86 @@
+
+#####################################################################
+# This is the colors configuration file         		    #
+# To add your own colors you need to create a line :		    #
+# 								    #
+# [group][color] "list,of,words,for,that,color"			    #
+# It's case-sensitive, <color> need to be in lowercase		    #
+# 								    #
+# You can customize your own colors in the Settings.cfg file	    #
+# 								    #
+# The group need to be the same as the filter.txt, here's the list: #
+# 								    #
+# [battle_minor] [battle] [JobSuspension] [Production] [misc]	    #
+# [masterpiece] [beekeeping] [deaths] [dfhack] [fishing]	    #
+# [interactions] [emotion] [system] [trading] [weather]		    #
+# [seasons] [migrants] [profession] [social] [animals]		    #
+# [named_item] [moods] [mining] [mandates] [intruders]		    #
+# 								    #
+# For general highlighting you must use the [General] group	    #
+#####################################################################
+
+
+###########
+# General #
+###########
+
+#Job
+[General][silver] "Miner"
+[General][yellow] "Woodworker,Carpenter,Bowyer,Woodcutter"
+[General][white] "Stoneworker,Engraver,Mason"
+[General][green] "Ranger,Animal Caretaker,Animal Trainer,Hunter,Trapper,Animal Dissector"
+[General][gray] "Metalsmith,Furnace Operator,Weaponsmith,Armorer,Blacksmith,Metalcrafter"
+[General][lime] "Jeweler,Gem Cutter,Gem Setter"
+[General][blue] "Craftsman,Craftsdwarf,Woodcrafter,Stonecrafter,Leatherworker,Bone Carver,Weaver,Clothier,Glassmaker,Potter,Glazer,Wax Worker,Strand Extractor"
+[General][navy] "Fishery Worker,Fisherman,Fish Dissector,Fish Cleaner"
+[General][olive] "Farmer,Cheese Maker,Milker,Cook,Thresher,Miller,Butcher,Tanner,Dyer,Planter,Herbalist,Brewer,Soap Maker,Potash Maker,Lye Maker,Wood Burner,Shearer,Spinner,Presser,Beekeeper"
+[General][red] "Engineer,Mechanic,Siege Engineer,Siege Operator,Pump Operator"
+[General][purple] "Clerk,Administrator,Trader,Architect,Alchemist,Bone Doctor,Diagnoser,Doctor,Suturer,Surgeon,broker"
+[General][gray] "Merchant"
+[General][purple] "Hammerman"
+[General][fuchsia] "Hammer Lord"
+[General][olive] "Spearman"
+[General][yellow] "Spearmaster"
+[General][green] "Crossbowman"
+[General][lime] "Elite Crossbowman"
+[General][silver] "Wrestler,Miner"
+[General][white] "Elite Wrestler"
+[General][navy] "Axeman"
+[General][blue] "Axe Lord"
+[General][teal] "Swordsman"
+[General][aqua] "Swordmaster"
+[General][maroon] "Maceman"
+[General][red] "Mace Lord"
+[General][olive] "Pikeman"
+[General][yellow] "Pikemaster"
+[General][green] "Bowman"
+[General][lime] "Elite Bowman"
+[General][gray] "Blowgunner,Master Blowgunner,Lasher,Master Lasher,Recruit"
+[General][silver] "Hunting Animal"
+[General][gray] "War Animal,Master Thief,Thief"
+[General][teal] "Peasant"
+[General][maroon] "Dwarven Child,Child,Baby"
+[General][olive] "Drunk,Monster Slayer,Scout,Beast Hunter,Snatcher,Mercenary,Gelder,Performer"
+[General][purple] "Poet,Bard,Dancer,Sage,Scholar,Philosopher,Mathematician,Historian,Astronomer,Naturalist,Chemist,Geographer,Scribe"
+[General][blue] "Papermaker,Bookbinder"
+[General][purple] "Tavern Keeper"
+[General][gray] "Criminal"
+[General][silver] "Peddler"
+[General][white] "Prophet,Pilgrim,Monk"
+[General][purple] "Messenger"
+
+#Noble
+[General][yellow] "queen,king,mayor,baronness,baron,chief medical dwarf,outpost liaison,manager,captain of the guard,militia captain"
+
+###########
+# Emotion #
+###########
+[emotion][aqua] "enraptured,pleasure,very pleased,How pleasurable,pleases me,admirable,admiration,very fond,fondness,sympathy,sympathetic,affection,adoration,love,tenderness,passionate,aroused,caring,care so much,really care,proud,gratitude,very grateful,repentant,empathy,wonder,wondrous,spiritually moved"
+[emotion][green] "feel so good,excited,exciting,euphoric,joyable,joyous,enjoyment,enjoyed,happy,gaiety,amused,amusing,blissful,could be bliss,jovial,delighted,some delight,delightful,content,contented,satisfied,satisfying,elated,relieved,free,expectant,triumph,hope,optimistic,pretty good,feeling great"
+[emotion][navy] "exhilarated,exhilarating,interested,amazing,interesting,astonished,awe,eager"
+[emotion][gray] "accepting,ambivalent,no pleasure,not filled with delight,do not see the bliss in this,not enjoying,not uneasy,not resent,doesn't excite me,accept this,not much to admire here"
+[emotion][purple] "suspicious"
+[emotion][olive] "annoyed,grouchy,exasperated,exasperating,irritated,irritating,dislike,bitter,resentful,resent,contemptuous,contempt,lonely,very uneasy,uneasy,worrisome,worried,restless,guilty,regretful,self-pity,frustrated,frustrating,bored,boring,embarrassed,embarrassing,disillutioned,dejected,very grouchy,very dejected,glum,indignant,insulted,offense,confused,agitated"
+[emotion][yellow] "shaken,no hope,hopeless,empty,disgusted,disgusting,mortified,distressed,humiliated,ashamed,shame,frightened,frightening,sad,sadness,grieved,anguish,shocked,panicked"
+[emotion][red] "angry,afraid,terrified,horrified,truly horrifying,vengeful,ferocity,outraged,outrage,loathing"
+

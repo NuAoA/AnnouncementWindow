@@ -37,10 +37,10 @@ class config(object):
         self.parser = ConfigParser.ConfigParser()
         self.filepath = "Settings.cfg"
         self.filters_path = "filters.txt"
+        self.wordcolor_path = "wordcolor.txt"
         self.gui_data = "Data/gui.dat"
         self.filters_pickle_path = "Data/filters.dat"
         self.icon_path = "@Data/favicon.XBM" if util.platform.linux else "Data/favicon.ico"
-        self.section = "Settings"
         self.init_var()
         self.load()
 
@@ -60,23 +60,37 @@ class config(object):
         self.load_previous_announcements = False
         self.save_hidden_announcements = False
         self.trim_announcements = [0, 0]
+        self.default_bg="#000000"
+        self.word_color_dict={"white":["#FFFFFF","#000000"],"silver":["#C0C0C0","#000000"],"gray":["#808080","#000000"],"black":["#000000","#000000"],"red":["#FF0000","#000000"],"maroon":["#800000","#000000"],"yellow":["#FFFF00","#000000"],"olive":["#808000","#000000"],"lime":["#00FF00","#000000"],"green":["#008000","#000000"],"aqua":["#00FFFF","#000000"],"teal":["#008080","#000000"],"blue":["#0000FF","#000000"],"navy":["#000080","#000000"],"fuchsia":["#FF00FF","#000000"],"purple":["#800080","#000000"]}
 
     def load(self):
         if not os.path.exists(self.filepath):
-            self.parser.add_section(self.section)
-            self.parser.set(self.section, 'gamelog_path', self.gamelogpath)
-            self.parser.set(self.section, 'save_hidden_announcements', str(self.save_hidden_announcements))
-            self.parser.set(self.section, 'load_previous_announcements', str(self.load_previous_announcements))
-            self.parser.set(self.section, 'trim_announcements_0', str(self.trim_announcements[0]))
-            self.parser.set(self.section, 'trim_announcements_1', str(self.trim_announcements[1]))
+            self.parser.add_section("Settings")
+            self.parser.set("Settings", 'gamelog_path', self.gamelogpath)
+            self.parser.set("Settings", 'save_hidden_announcements', str(self.save_hidden_announcements))
+            self.parser.set("Settings", 'load_previous_announcements', str(self.load_previous_announcements))
+            self.parser.set("Settings", 'trim_announcements_0', str(self.trim_announcements[0]))
+            self.parser.set("Settings", 'trim_announcements_1', str(self.trim_announcements[1]))
+            self.parser.add_section("Colors")
+            self.parser.set("Colors", 'default_background', str(self.default_bg))
+            for color in self.word_color_dict:
+                self.parser.set("Colors",color,self.word_color_dict[color][0])
             self.save()
         else:
             self.parser.read(self.filepath)
-            self.gamelogpath = self.parser.get(self.section, "gamelog_path").replace('"', '')
-            self.save_hidden_announcements = self.parser.getboolean(self.section, 'save_hidden_announcements')
-            self.load_previous_announcements = self.parser.getboolean(self.section, 'load_previous_announcements')
-            self.trim_announcements[0] = self.parser.getint(self.section, 'trim_announcements_0')
-            self.trim_announcements[1] = self.parser.getint(self.section, 'trim_announcements_1')
+            self.gamelogpath = self.parser.get("Settings", "gamelog_path").replace('"', '')
+            self.save_hidden_announcements = self.parser.getboolean("Settings", 'save_hidden_announcements')
+            self.load_previous_announcements = self.parser.getboolean("Settings", 'load_previous_announcements')
+            self.trim_announcements[0] = self.parser.getint("Settings", 'trim_announcements_0')
+            self.trim_announcements[1] = self.parser.getint("Settings", 'trim_announcements_1')
+            self.word_color_dict={}
+            self.default_bg = self.parser.get("Colors", 'default_background')
+            for (color_name,color_value) in self.parser.items("Colors"):
+                fg_bg=color_value.split()
+                if color_name != "default_background":
+                    if len(fg_bg)==1:
+                        fg_bg.append(self.default_bg)
+                    self.word_color_dict[color_name]=fg_bg
 
     def save(self):
         with open(self.filepath, 'w') as fi:
@@ -87,7 +101,7 @@ class config(object):
 
     def set_gamelog_path(self, path):
         self.gamelogpath = path.replace('"', '')
-        self.parser.set(self.section, "gamelog_path", self.gamelogpath)
+        self.parser.set("Settings", "gamelog_path", self.gamelogpath)
         self.save()
 
     def get_showgroups(self):
@@ -95,7 +109,7 @@ class config(object):
 
     def set_showgroups(self, toggle):
         self.showgroups = toggle
-        self.parser.set(self.section, "show_groups", self.showgroups)
+        self.parser.set("Settings", "show_groups", self.showgroups)
         self.save()
 
 settings = config()

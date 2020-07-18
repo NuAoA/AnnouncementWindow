@@ -12,10 +12,12 @@ elif  sys.version_info.major == 3:
 else:
     raise UserWarning("unknown python version?!")
 
+import re
 import tkFontChooser
 import Config
 import Editor
 import Filters
+import WordColor
 import GamelogReader
 import util
 import os
@@ -50,7 +52,6 @@ class announcement_window(Tkinter.Frame):
         self.text.pack(side="left", fill="both", expand=True)
         self.text.bind(util.mouse_buttons.right, self.popup)
 
-
         # link methods
         self.insert = self.text.insert
         self.delete = self.text.delete
@@ -65,7 +66,6 @@ class announcement_window(Tkinter.Frame):
         self.config = self.text.config
         self.yview = self.text.yview
 
-
     def init_pulldown(self):
         self.pulldown = Tkinter.Menu(self, tearoff=0)
         bg = "white"
@@ -76,7 +76,6 @@ class announcement_window(Tkinter.Frame):
         self.pulldown.add_command(label="Change Font", command=self.edit_font)
         self.pulldown.add_command(label="Toggle Tags", command=self.toggle_tags)
         self.pulldown.add_command(label="Clear Window", command=self.clear_window)
-        # self.pulldown.add_command(label="test", command=self.test_todo_remove)
 
     def popup(self, event):
         if self.focus_get() is not None:
@@ -108,10 +107,13 @@ class announcement_window(Tkinter.Frame):
         self.gen_tags(clear_index_dict=True)
         self.config(state="disabled")
 
-
     def gen_tags(self, clear_index_dict=False):
+        """Generate the tkinter tags for coloring
+        """        
         self.vsb_pos = (self.vsb.get()[1])
+        colordict=Config.settings.word_color_dict
         for group_ in Filters.expressions.groups.items():
+            # Group Coloring
             group = group_[1]
             for category_ in group.categories.items():
                 category = category_[1]
@@ -123,14 +125,27 @@ class announcement_window(Tkinter.Frame):
                     self.index_dict[tag_name] = 0
                 elif not (tag_name in self.index_dict):
                     self.index_dict[tag_name] = 0
+        for color in colordict:
+            # Word Coloring
+            self.tag_config(color, foreground=colordict[color][0], background=colordict[color][1])
         if self.vsb_pos == 1.0:
             self.yview("end")
 
     def insert_ann(self, ann):
         def insert():
-            tag_name = "%s.%s" % (ann.get_group(), ann.get_category())
-            self.insert("end", "[%s][%s] " % (ann.get_group(), ann.get_category()), '%s.elide' % tag_name)
-            self.insert("end", "%s" % (ann.get_text()), tag_name)
+            anngroup=ann.get_group()
+            anncat=ann.get_category()
+            tag_name = "%s.%s" % (anngroup, anncat)
+            self.insert("end", "[%s][%s] " % (anngroup, anncat), '%s.elide' % tag_name)
+            regex=r"(\b"+'\\b|\\b'.join(WordColor.wd.get_all_group_words(anngroup))+"\\b)"
+            tokenized = re.split(regex, ann.get_text())
+            for token in tokenized:
+                hlwordcolor=WordColor.wd.get_colorname(token,anngroup)
+                self.insert("end", "%s" % token, tag_name)
+                if hlwordcolor:
+                    start="end-"+str(1+len(token))+"c"
+                    end="end-1c"
+                    self.tag_add(hlwordcolor,start,end)
             self.trim_announcements(tag_name)
 
         if ann.get_show(self.id):
@@ -176,7 +191,9 @@ class main_gui(Tkinter.Tk):
         options_menu = Tkinter.Menu(self.menu, tearoff=0)
         options_menu.add_command(label="Filter Configuration", command=self.config_gui)
         options_menu.add_command(label="Edit filters.txt", command=self.open_filters)
+        options_menu.add_command(label="Reload wordcolor.txt", command=WordColor.wd.reload)
         options_menu.add_command(label="Reload filters.txt", command=Filters.expressions.reload)
+        options_menu.add_command(label="Reload Settings", command=self.reload_settings)
 
         self.settings_menu = Tkinter.Menu(self.menu, tearoff=0)
         self.settings_menu.add_command(label="Set Directory", command=self.askpath)
@@ -223,6 +240,10 @@ class main_gui(Tkinter.Tk):
         self.gui_data["sash_place"] = self.panel.sash_coord(0)[1]
         Config.settings.save_gui_data(self.gui_data)
         self.destroy()
+
+    def reload_settings(self):
+        Config.settings.load()
+        self.gen_tags()
 
     def edit_filters(self):
         Editor.TextEditor(Config.settings.filters_path)

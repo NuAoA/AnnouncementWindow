@@ -12,7 +12,7 @@ This program was written for python 2.7.10, but now has python 3 support! It sho
 
 ### **Install**
 
-If you are running windows, download the latest release (https://github.com/NuAoA/AnnouncementWindow/releases) and unzip the folder anywhere on your computer. Click *AnnouncementWindow.exe* to launch.
+If you are running windows, download the latest release (https://github.com/BrachystochroneSD/AnnouncementWindow/releases) and unzip the folder anywhere on your computer. Click *AnnouncementWindow.exe* to launch.
 
 If you are not on windows, or just want to run the code directly, you will need to have python installed on your computer. Download the repository. The program is launched by running the script *run.py*.
 
@@ -47,6 +47,30 @@ to
 
 Now you can now edit the color for the new group ```[intruders_Thief]```.
 
+### **Custom Word Coloring**
+
+You can customize the list of words to be highlighted with a defined color with similare format
+in the wordcolor.txt
+Each tag follows the format:
+
+[group][colortag] "list,of,words"
+
+Where ```[group]``` is the same tag as the filters.txt format. The ```[colortag]``` is
+defined in the *Settings.cfg* [Colors] section (see Settings/Colors section below). The words need to be listed between double quotes
+and separated with coma.
+
+For example, to set all "cancels" and "mandate" words to be highlighted in red, you can add
+a line in the wordcolor.txt:
+```
+[General][red] "cancels,mandate"
+```
+
+You can specify the same word with different colors for different group like so:
+```
+[battle][green] "Urist McColored"
+[masterpiece][olive] "Urist McColored"
+```
+
 ### **Settings**
 
 There are a few options in *settings.cfg* that change how the program functions. For the most part they allow you to change how demanding this program is on your CPU along with how much memory it uses, which is only really a concern if you are running a [danger room](http://dwarffortresswiki.org/index.php/DF2014:Danger_room) ("*The Dwarf blocks The spinning *apricot wood training spear* with the -copper shield-!*" spam) or otherwise are generating hundreds of announcements per second. Note, periodically clearing the windows (maybe once per hour) will keep even the worst offenders under ~150mb of ram. Also, if you are running multiple cores (its 2015 for god sakes) CPU usage is not much of a concern since Dwarf Fortress only uses a single core. 
@@ -67,4 +91,14 @@ If you set this to ```True``` it tell the program to save all announcements, eve
 
 This option saves system memory at the cost of increased CPU power. If it is set to any integer value above zero, it will limit how many of each announcement type (category) are saved in memory. For example, a value of 2000 would store only up to 2000 of each type of announcement (ie 2000 ```[battle_minor][hitevents_miss]``` along with 2000 ```[battle_minor][block_dodge]```, which are typical combat training spam). Once there are 2000 of that type of announcement, the oldest announcement will be thrown out to free up some space. If it is set to zero, all announcements will be kept until you clear the window(s).
 
-Another use of this option is to set the value to 1 for one of the windows, making it only display a single announcement from each category. The window would then only display the most recent event, ie. *"A (.+) caravan from (.+) has arrived"* would be replaced by *"Merchants have arrived and are unloading their goods"* once they reach your trade depot or "It has started Raining" would be replaced by "The weather has cleared" when the rain stops.   
+Another use of this option is to set the value to 1 for one of the windows, making it only display a single announcement from each category. The window would then only display the most recent event, ie. *"A (.+) caravan from (.+) has arrived"* would be replaced by *"Merchants have arrived and are unloading their goods"* once they reach your trade depot or "It has started Raining" would be replaced by "The weather has cleared" when the rain stops.
+
+* ```Colors```
+
+Simply add your custom "ColorTag" under the section [Colors] with a custom name and the hex value of your choice.
+Each "colortag" can take two arguments: a *foreground* color and a *background* color (#RGB or #RRGGBB).
+The format is:
+```tagname = #foreground #background```
+If there's no background color defined, the ```default_background``` color is used.
+The ```default_background``` only take one argument and set the default background used for non-specified background colortag.
+You can modify the hex value of the default colors and assign new words in the wordcolor.txt file.
