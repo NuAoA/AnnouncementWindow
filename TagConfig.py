@@ -62,6 +62,8 @@ class CategoryBar(Tkinter.Frame):
         self.dialog = dialog
         self.category = category
         self.is_grid = False
+        self.window1_selection = Tkinter.IntVar()
+        self.window2_selection = Tkinter.IntVar()
         # self.config(background="green")
 
         self.expand_button = Tkinter.Button(self, text="+", command=self.expand, width=1)
@@ -76,10 +78,13 @@ class CategoryBar(Tkinter.Frame):
         for show_ in self.category.show.items():
             window = show_[0]
             show = show_[1]
-            cbutton = Tkinter.Checkbutton(frame, background="gray")
+            variable = self.window1_selection if col_ == 1 else self.window2_selection
+            cbutton = Tkinter.Checkbutton(frame,
+                                          background="gray",
+                                          variable=variable,
+                                          command=partial(self.set_show, window))
             if show:
                 cbutton.select()
-            cbutton.config(command=partial(self.set_show, window, show, cbutton))
             cbutton.grid(row=0, column=col_)
             col_ += 1
         frame.grid(row=0, column=1, sticky="w")
@@ -91,7 +96,7 @@ class CategoryBar(Tkinter.Frame):
             e_.grid(row=row_, column=0, sticky="w")
 
 
-    def set_show(self, window, currentVal, button):
+    def set_show(self, window):
         self.category.show[window] = not self.category.show[window]
 
     def expand(self):
@@ -254,7 +259,7 @@ class MainDialog(Tkinter.Toplevel):
         canvas.create_window((0, 0), window=frame, anchor="nw")
         canvas.update_idletasks()
 
-        self.minsize(frame.winfo_width(), 300)
+        self.minsize(frame.winfo_width(), 500)
         self.maxsize(1080, frame.winfo_height())
         self.resize()
 
