@@ -79,14 +79,12 @@ class CategoryBar(Tkinter.Frame):
             window = show_[0]
             show = show_[1]
             variable = self.window1_selection if col_ == 1 else self.window2_selection
-
             cbutton = Tkinter.Checkbutton(frame,
                                           background="gray",
                                           variable=variable,
                                           command=partial(self.set_show, window))
             if show:
                 cbutton.select()
-
             cbutton.grid(row=0, column=col_)
             col_ += 1
         frame.grid(row=0, column=1, sticky="w")
