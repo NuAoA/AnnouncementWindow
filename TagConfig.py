@@ -1,9 +1,10 @@
 import sys
+
 if sys.version_info.major == 2:
     import Tkinter
     import tkColorChooser
     import tkFont
-elif  sys.version_info.major == 3:
+elif sys.version_info.major == 3:
     import tkinter as Tkinter
     import tkinter.colorchooser as tkColorChooser
     import tkinter.font as tkFont
@@ -26,6 +27,7 @@ CENTER = Tkinter.CENTER
 
 RE_MODIFIED = False
 
+
 class ExpressionBar(Tkinter.Frame):
     def __init__(self, parent, category, expression_index):
         Tkinter.Frame.__init__(self, parent)
@@ -37,7 +39,8 @@ class ExpressionBar(Tkinter.Frame):
         self.string_.set(self.expression.pattern)
         modcommand = self.register(self.exp_modified)
 
-        self.entry = Tkinter.Entry(self, width=75, validate='key', validatecommand=(modcommand, '%P'), textvariable=self.string_)
+        self.entry = Tkinter.Entry(self, width=75, validate='key', validatecommand=(modcommand, '%P'),
+                                   textvariable=self.string_)
         self.entry.pack(side=LEFT)
 
         label = Tkinter.Label(self, text=" ")
@@ -54,6 +57,7 @@ class ExpressionBar(Tkinter.Frame):
             return True
         return False
 
+
 class CategoryBar(Tkinter.Frame):
     def __init__(self, parent, category, topparent, dialog):
         Tkinter.Frame.__init__(self, parent)
@@ -62,6 +66,8 @@ class CategoryBar(Tkinter.Frame):
         self.dialog = dialog
         self.category = category
         self.is_grid = False
+        self.window1_selection = Tkinter.IntVar()
+        self.window2_selection = Tkinter.IntVar()
         # self.config(background="green")
 
         self.expand_button = Tkinter.Button(self, text="+", command=self.expand, width=1)
@@ -76,10 +82,15 @@ class CategoryBar(Tkinter.Frame):
         for show_ in self.category.show.items():
             window = show_[0]
             show = show_[1]
-            cbutton = Tkinter.Checkbutton(frame, background="gray")
+            variable = self.window1_selection if col_ == 1 else self.window2_selection
+
+            cbutton = Tkinter.Checkbutton(frame,
+                                          background="gray",
+                                          variable=variable,
+                                          command=partial(self.set_show, window))
             if show:
                 cbutton.select()
-            cbutton.config(command=partial(self.set_show, window, show, cbutton))
+
             cbutton.grid(row=0, column=col_)
             col_ += 1
         frame.grid(row=0, column=1, sticky="w")
@@ -90,8 +101,7 @@ class CategoryBar(Tkinter.Frame):
             e_ = ExpressionBar(self.expression_frame, self.category, row_)
             e_.grid(row=row_, column=0, sticky="w")
 
-
-    def set_show(self, window, currentVal, button):
+    def set_show(self, window):
         self.category.show[window] = not self.category.show[window]
 
     def expand(self):
@@ -104,6 +114,7 @@ class CategoryBar(Tkinter.Frame):
         self.is_grid = not self.is_grid
 
         self.dialog.resize()
+
 
 class GroupBar(Tkinter.Frame):
     def __init__(self, parent, group, dialog):
@@ -159,7 +170,6 @@ class GroupBar(Tkinter.Frame):
             c_ = CategoryBar(self.category_frame, category, self.parent, dialog)
             c_.grid(row=row_, column=0, sticky="w")
             row_ += 1
-
 
     def set_color(self):
         new_color = tkColorChooser.askcolor(parent=self)[1]
@@ -222,7 +232,8 @@ class MainDialog(Tkinter.Toplevel):
         else:
             frame = Tkinter.Frame(self.body_frame)
             ok_button = Tkinter.Button(frame, text="Accept", command=self.ok)  # , background=self.group.color)
-            cancel_button = Tkinter.Button(frame, text="Cancel", command=self.cancel)  # .cancel, background=self.group.color)
+            cancel_button = Tkinter.Button(frame, text="Cancel",
+                                           command=self.cancel)  # .cancel, background=self.group.color)
             ok_button.pack(side=LEFT)
             cancel_button.pack(side=RIGHT)
             frame.grid(row=0, column=1, sticky='sw')
@@ -233,7 +244,6 @@ class MainDialog(Tkinter.Toplevel):
         self.grid_rowconfigure(1, weight=1)
         self.body_frame.grid_columnconfigure(1, weight=1)
         self.body_frame.grid_rowconfigure(1, weight=1)
-
 
     def body(self, master):
         canvas = Tkinter.Canvas(master, borderwidth=0, width=168)
@@ -254,14 +264,14 @@ class MainDialog(Tkinter.Toplevel):
         canvas.create_window((0, 0), window=frame, anchor="nw")
         canvas.update_idletasks()
 
-        self.minsize(frame.winfo_width(), 300)
+        self.minsize(frame.winfo_width(), 500)
         self.maxsize(1080, frame.winfo_height())
         self.resize()
 
     def resize(self):
         self.update_idletasks()
         self.canvas.config(width=self.canvas_frame.winfo_width(), height=self.winfo_height(),
-            scrollregion=self.canvas.bbox('all'))
+                           scrollregion=self.canvas.bbox('all'))
         self.config(width=self.canvas.winfo_width())
 
     def ok(self, event=None):
@@ -288,10 +298,12 @@ class MainDialog(Tkinter.Toplevel):
         self.initial_focus = None
         Tkinter.Toplevel.destroy(self)
 
+
 # A test configuation:
 if __name__ == '__main__':
     def launch_dialog():
         MainDialog(root)
+
 
     # I need to call these or color&visibility data will not be loaded:
     for i in range(0, 8):
@@ -305,6 +317,3 @@ if __name__ == '__main__':
     button = Tkinter.Button(frame, text="Open Editor", command=launch_dialog)
     button.pack()
     root.mainloop()
-
-
-
